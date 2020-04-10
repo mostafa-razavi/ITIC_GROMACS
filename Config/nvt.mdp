@@ -1,0 +1,65 @@
+; Run control 
+integrator               = md-vv
+tinit                    = 0
+dt                       = some_dt
+nsteps                   = some_nsteps
+nstcomm                  = 100
+
+; Output control
+nstxout                  = some_out_freq
+nstvout                  = some_out_freq
+nstfout                  = 0
+nstlog                   = some_out_freq
+nstenergy                = some_out_freq
+nstxout-compressed       = 0
+
+; Neighborsearching and short-range nonbonded interactions
+cutoff-scheme            = Verlet
+nstlist                  = 10
+pbc                      = xyz
+rlist                    = some_rlist
+
+; Electrostatics
+coulombtype              = some_coulombtype
+rcoulomb                 = some_rcoulomb
+
+; van der Waals
+vdwtype                  = some_vdwtype
+vdw-modifier             = some_vdwmodifier
+rvdw                     = some_rvdw
+rvdw-switch              = some_rswitch
+
+; Apply long range dispersion corrections for Energy and Pressure
+DispCorr                 = some_DispCorr
+
+; Spacing for the PME/PPPM FFT grid
+fourierspacing           = 0.12
+
+; EWALD/PME/PPPM parameters
+pme-order                = 4
+ewald-rtol               = 1e-06
+epsilon-surface          = 0
+
+; Temperature coupling
+Tcoupl                   = nose-hoover
+tc-grps                  = system
+tau-t                    = 1.0
+ref-t                    = some_Temperature
+
+; Pressure coupling is off for NVT
+Pcoupl                   = no
+tau-p                    = 0.5
+compressibility          = 4.5e-05
+ref-p                    = 1.0
+
+; options for bonds
+continuation             = some_continuation
+constraints              = all-bonds
+constraint-algorithm     = lincs
+lincs-order              = some_lincsorder
+lincs-iter               = 1
+
+; velocity generation
+gen-vel                  = some_genvel
+gen-temp                 = some_Temperature
+gen-seed                 = -1
