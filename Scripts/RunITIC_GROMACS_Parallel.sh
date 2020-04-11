@@ -236,8 +236,9 @@ for rho in "${rhosIC[@]}"
 		sed -i -e "s/some_Temperature/$T/g" $CD/IC/${rho}/${T}/nvt_pr.mdp
 		sed -i -e "s/Nmolec/$N/g" $CD/IC/${rho}/${T}/${molecule}.top
 
-		line="cd $CD/IC/${rho}/${T}; \
-			$gmx_exe_address insert-molecules -ci ${molecule}.pdb -nmol $N -box $L $L $L -o ${molecule}_box.gro; \
+		line="source /usr/local/gromacs/bin/GMXRC; \
+			cd $CD/IC/${rho}/${T}; \
+			$gmx_exe_address insert-molecules -ci ${molecule}.pdb -nmol $N -try 100000 -box $L $L $L -o ${molecule}_box.gro; \
 			$gmx_exe_address grompp -f em_steep.mdp -c ${molecule}_box.gro -p ${molecule}.top -o em_steep.tpr; \
 			$gmx_exe_address mdrun -nt 1 -deffnm em_steep; \
 			$gmx_exe_address grompp -f em_l-bfgs.mdp -c em_steep.gro -p ${molecule}.top -o em_l_bfgs.tpr -maxwarn 1; \
@@ -299,7 +300,8 @@ for T in "${TsIT[@]}"
 		sed -i -e "s/some_Temperature/$T/g" $CD/IT/${T}/${rho}/nvt_pr.mdp
 		sed -i -e "s/Nmolec/$N/g" $CD/IT/${T}/${rho}/${molecule}.top
 
-		line="cd $CD/IT/${T}/${rho}; \
+		line="source /usr/local/gromacs/bin/GMXRC; \
+			cd $CD/IT/${T}/${rho}; \
 			$gmx_exe_address insert-molecules -ci ${molecule}.pdb -nmol $N -box $L $L $L -o ${molecule}_box.gro; \
 			$gmx_exe_address grompp -f em_steep.mdp -c ${molecule}_box.gro -p ${molecule}.top -o em_steep.tpr; \
 			$gmx_exe_address mdrun -nt 1 -deffnm em_steep; \
@@ -311,7 +313,7 @@ for T in "${TsIT[@]}"
 			$gmx_exe_address mdrun -nt 1 -deffnm nvt_pr;"
 
 		if [ "$Trho_rhoT_pairs_array" == "all" ]; then
-			echo "cd $line" >> $CD/COMMANDS.parallel
+			echo "$line" >> $CD/COMMANDS.parallel
 		else
 			if [ "$(isTrhoPairSelected "$CD/IT/${T}/${rho}/" "$Trho_rhoT_pairs_array")" == "found" ]; then
 				echo "$line" >> $CD/COMMANDS.parallel	
