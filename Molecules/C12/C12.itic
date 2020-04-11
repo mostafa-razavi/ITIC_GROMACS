@@ -1,0 +1,43 @@
+
+CASN:   112-40-3
+CNAM:   DODECANE
+ FAM:   N-ALKANES
+FORM:   C12H26
+INAM:   DODECANE
+NAME:   n-DODECANE
+SMIL:   CCCCCCCCCCCC
+STRU:   CH3(CH2)10CH3
+
+  MW:   170.33484
+  TC:   658.00000
+  PC:     1.82000
+RHOC:     0.22561
+
+RHO_HIGH:   0.7471
+  T_HIGH:   691.00
+
+ Isotherms:
+
+    T_IT:   691.00  592.20
+
+ RHO_IT1:   0.0267  0.0356  0.0534  0.1067  0.2135  0.3202  0.4269  0.5336  0.5870  0.6404  0.6937  0.7471
+ RHO_IT2:   0.0267  0.0356  0.0534  0.1067
+
+NMOL_IT1:      400     400     400     400     100     100     100     100     100     100     100     100
+NMOL_IT2:      400     400     400     400
+
+ Isochores:
+
+  RHO_IC:   0.5336  0.5870  0.6404  0.6937  0.7471
+
+   T_IC1:   547.99  611.24
+   T_IC2:   496.88  578.08
+   T_IC3:   436.18  534.79
+   T_IC4:   368.10  480.33
+   T_IC5:   296.20  414.66
+
+NMOL_IC1:      100     100
+NMOL_IC2:      100     100
+NMOL_IC3:      100     100
+NMOL_IC4:      100     100
+NMOL_IC5:      100     100

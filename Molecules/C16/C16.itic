@@ -1,0 +1,43 @@
+
+CASN:   544-76-3
+CNAM:   HEXADECANE
+ FAM:   N-ALKANES
+FORM:   C16H34
+INAM:   HEXADECANE
+NAME:   n-HEXADECANE
+SMIL:   CCCCCCCCCCCCCCCC
+STRU:   CH3(CH2)14CH3
+
+  MW:   226.44116
+  TC:   723.00000
+  PC:     1.40000
+RHOC:     0.21773
+
+RHO_HIGH:   0.7513
+  T_HIGH:   759.15
+
+ Isotherms:
+
+    T_IT:   759.15  650.70
+
+ RHO_IT1:   0.0268  0.0358  0.0537  0.1073  0.2147  0.3220  0.4293  0.5367  0.5903  0.6440  0.6976  0.7513
+ RHO_IT2:   0.0268  0.0358  0.0537  0.1073
+
+NMOL_IT1:      300     300     300     300      75      75      75      75      75      75      75      75
+NMOL_IT2:      300     300     300     300
+
+ Isochores:
+
+  RHO_IC:   0.5367  0.5903  0.6440  0.6976  0.7513
+
+T_IC1:	601.49	670.82
+T_IC2:	543.35	633.04
+T_IC3:	475.58	584.52
+T_IC4:	401.70	525.17
+T_IC5:	325.05	455.03
+
+NMOL_IC1:       75      75
+NMOL_IC2:       75      75
+NMOL_IC3:       75      75
+NMOL_IC4:       75      75
+NMOL_IC5:       75      75

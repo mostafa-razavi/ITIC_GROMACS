@@ -1,0 +1,20 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+C2A               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   CH3_C          1    C2A     C1      1      0         15.035   
+     2   CH3_C          1    C2A     C2      1      0         15.035   
+
+[ bonds ]
+; i	j
+1	2
+
+[ system ]
+ethane
+
+[ molecules ]
+C2A Nmolec

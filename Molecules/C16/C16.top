@@ -1,0 +1,82 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+C16               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   CH3_C          1    C16     C1      1      0         15.035   
+     2   CH2_C          1    C16     C2      1      0         14.027   
+     3   CH2_C          1    C16     C3      1      0         14.027   
+     4   CH2_C          1    C16     C4      1      0         14.027   
+     5   CH2_C          1    C16     C5      1      0         14.027   
+     6   CH2_C          1    C16     C6      1      0         14.027   
+     7   CH2_C          1    C16     C7      1      0         14.027   
+     8   CH2_C          1    C16     C8      1      0         14.027   
+     9   CH2_C          1    C16     C9      1      0         14.027   
+    10   CH2_C          1    C16     C10     1      0         14.027   
+    11   CH2_C          1    C16     C11     1      0         14.027   
+    12   CH2_C          1    C16     C12     1      0         14.027   
+    13   CH2_C          1    C16     C13     1      0         14.027   
+    14   CH2_C          1    C16     C14     1      0         14.027   
+    15   CH2_C          1    C16     C15     1      0         14.027   
+    16   CH3_C          1    C16     C16     1      0         15.035   
+
+[ bonds ]
+; i	j
+1	2
+2	3
+3	4
+4	5
+5   6
+6   7
+7   8
+8   9  
+9   10
+10  11
+11  12
+12  13
+13  14
+14  15
+15  16
+
+[ angles ]
+; i	j	k
+1	2	3
+2	3	4
+3	4	5
+4   5   6
+5   6   7
+6   7   8
+7   8   9
+8   9   10
+9   10  11
+10  11  12
+11  12  13
+12  13  14
+13  14  15
+14  15  16
+
+[ dihedrals ]
+; i	j	k 	l	type
+1 	2	3	4	3
+2	3	4	5	3
+3   4   5   6   3
+4   5   6   7   3
+5   6   7   8   3
+6   7   8   9   3
+7   8   9   10  3
+8   9   10  11  3
+9   10  11  12  3
+10  11  12  13  3
+11  12  13  14  3
+12  13  14  15  3
+13  14  15  16  3
+
+[ system ]
+hexadecane
+
+[ molecules ]
+C16 Nmolec
+

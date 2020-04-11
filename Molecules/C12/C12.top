@@ -1,0 +1,66 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+C12               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   CH3_C          1    C12     C1      1      0         15.035   
+     2   CH2_C          1    C12     C2      1      0         14.027   
+     3   CH2_C          1    C12     C3      1      0         14.027   
+     4   CH2_C          1    C12     C4      1      0         14.027   
+     5   CH2_C          1    C12     C5      1      0         14.027   
+     6   CH2_C          1    C12     C6      1      0         14.027   
+     7   CH2_C          1    C12     C7      1      0         14.027   
+     8   CH2_C          1    C12     C8      1      0         14.027   
+     9   CH2_C          1    C12     C9      1      0         14.027   
+    10   CH2_C          1    C12     C10     1      0         14.027   
+    11   CH2_C          1    C12     C11     1      0         14.027   
+    12   CH3_C          1    C12     C12     1      0         15.035   
+
+[ bonds ]
+; i	j
+1	2
+2	3
+3	4
+4	5
+5   6
+6   7
+7   8
+8   9  
+9   10
+10  11
+11  12
+
+[ angles ]
+; i	j	k
+1	2	3
+2	3	4
+3	4	5
+4   5   6
+5   6   7
+6   7   8
+7   8   9
+8   9   10
+9   10  11
+10  11  12
+
+[ dihedrals ]
+; i	j	k 	l	type
+1 	2	3	4	3
+2	3	4	5	3
+3   4   5   6   3
+4   5   6   7   3
+5   6   7   8   3
+6   7   8   9   3
+7   8   9   10  3
+8   9   10  11  3
+9   10  11  12  3
+   
+[ system ]
+dodecane
+
+[ molecules ]
+C12 Nmolec
+
