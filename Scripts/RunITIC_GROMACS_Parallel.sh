@@ -283,7 +283,7 @@ for T in "${TsIT[@]}"
 		mkdir -p $CD/IT/${T}/${rho}
 
 		if [ "$NmolecOverride" == "no-override" ]; then 
-			N=${Nic[k]}
+			N=${Nit[l]}
 		else
 			N=$NmolecOverride
 		fi
