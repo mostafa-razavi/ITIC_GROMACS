@@ -51,7 +51,7 @@ fi
 
 for fol in I*/*/*; do 
 	cd $fol
-	$gmx_exe_address energy -f $edrFile < ../../../FF/properties.inp | tee $RunOrRerun.out 
+	$gmx_exe_address energy -f $edrFile < $HOME/Git/ITIC_GROMACS/Config/properties.inp | tee $RunOrRerun.out 
 	cd $CD
 done
 
