@@ -41,7 +41,7 @@ gmx_exe_address="$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 
 if [ "$RunOrRerun" == "run" ]
 then
-	edrFile="nvt_prod.edr"
+	edrFile="nvt_pr.edr"
 	RunOrRerun="run"
 elif [ "$RunOrRerun" == "rerun" ]
 then
