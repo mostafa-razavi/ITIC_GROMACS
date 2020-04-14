@@ -1,5 +1,5 @@
 ; Run control 
-integrator               = md-vv
+integrator               = md
 tinit                    = 0
 dt                       = some_dt
 nsteps                   = some_nsteps
