@@ -37,7 +37,7 @@ term[32]="SurfTen"
 term[33]="T System"
 CD=${PWD}
 
-gmx_exe_address="$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
+gmx_exe_address="$HOME/Git/GROMACS/gromacs-2020.1/build/bin/gmx"
 
 if [ "$RunOrRerun" == "run" ]
 then
