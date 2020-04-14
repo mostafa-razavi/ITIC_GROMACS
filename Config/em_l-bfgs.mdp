@@ -19,7 +19,7 @@ pbc                      = xyz
 rlist                    = 1.4
 
 ; Electrostatics
-coulombtype              = Reaction-Field-zero
+coulombtype              = Cut-off
 rcoulomb                 = 1.4
 
 ; van der Waals
