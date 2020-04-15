@@ -30,7 +30,9 @@ config_file="$HOME/Git/ITIC_GROMACS/Config/${config_filename}"
 dt=$(grep -R "^dt" $config_file | awk '{print $3}')
 nsteps_eq=$(grep -R "nsteps_eq" $config_file | awk '{print $3}')
 nsteps_pr=$(grep -R "nsteps_pr" $config_file | awk '{print $3}')
-out_freq=$(grep -R "out_freq" $config_file | awk '{print $3}')
+nstxout=$(grep -R "nstxout" $config_file | awk '{print $3}')
+nstlog=$(grep -R "nstlog" $config_file | awk '{print $3}')
+nstenergy=$(grep -R "nstenergy" $config_file | awk '{print $3}')
 vdwtype=$(grep -R "vdwtype" $config_file | awk '{print $3}')
 DispCorr=$(grep -R "DispCorr" $config_file | awk '{print $3}')
 vdwmodifier=$(grep -R "vdw-modifier" $config_file | awk '{print $3}')
@@ -46,14 +48,14 @@ continuation_pr=$(grep -R "continuation_pr" $config_file | awk '{print $3}')
 continuation_pr=$(grep -R "continuation_pr" $config_file | awk '{print $3}')
 lincsorder=$(grep -R "lincs-order" $config_file | awk '{print $3}')
 
-
 #===== Generate Files folder =====
 if [ -e "$CD/Files" ]; then echo "Files directory exists. Exiting..."; exit; else mkdir $CD/Files; fi
 
 cp $ConfigDir/nvt.mdp $CD/Files/nvt.mdp
 
 sed -i "s/some_dt/$dt/g" $CD/Files/nvt.mdp
-sed -i "s/some_out_freq/$out_freq/g" $CD/Files/nvt.mdp
+sed -i "s/some_nstlog/$nstlog/g" $CD/Files/nvt.mdp
+sed -i "s/some_nstenergy/$nstenergy/g" $CD/Files/nvt.mdp
 sed -i "s/some_vdwtype/$vdwtype/g" $CD/Files/nvt.mdp
 sed -i "s/some_DispCorr/$DispCorr/g" $CD/Files/nvt.mdp
 sed -i "s/some_vdwmodifier/$vdwmodifier/g" $CD/Files/nvt.mdp
@@ -67,10 +69,12 @@ sed -i "s/some_lincsorder/$lincsorder/g" $CD/Files/nvt.mdp
 cp $CD/Files/nvt.mdp $CD/Files/nvt_eq.mdp
 cp $CD/Files/nvt.mdp $CD/Files/nvt_pr.mdp
 
+sed -i "s/some_nstxout/0/g" $CD/Files/nvt_eq.mdp
 sed -i "s/some_genvel/$genvel_eq/g" $CD/Files/nvt_eq.mdp
 sed -i "s/some_nsteps/$nsteps_eq/g" $CD/Files/nvt_eq.mdp
 sed -i "s/some_continuation/$continuation_eq/g" $CD/Files/nvt_eq.mdp
 
+sed -i "s/some_nstxout/$nstxout/g" $CD/Files/nvt_pr.mdp
 sed -i "s/some_genvel/$genvel_pr/g" $CD/Files/nvt_pr.mdp
 sed -i "s/some_nsteps/$nsteps_pr/g" $CD/Files/nvt_pr.mdp
 sed -i "s/some_continuation/$continuation_pr/g" $CD/Files/nvt_pr.mdp
