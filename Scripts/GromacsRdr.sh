@@ -1,105 +1,94 @@
 #!/bin/bash
-RunOrRerun=$1
 source /usr/local/gromacs/bin/GMXRC
-term[0]="Density"
-term[1]="Angle"
-term[2]="Ryckaert"
-term[3]="LJ (SR)"
-term[4]="Disper. corr."
-term[5]="Coulomb (SR)"
-term[6]="Potential"
-term[7]="Kinetic En."
-term[8]="Total Energy"
-term[9]="Conserved En."
-term[10]="Temperature"
-term[11]="Pres. DC"
-term[12]="Pressure"
-term[13]="Constr. rmsd"
-term[14]="Vir XX"
-term[15]="Vir XY"
-term[16]="Vir XZ"
-term[17]="Vir YX"
-term[18]="Vir YY"
-term[19]="Vir YZ"
-term[20]="Vir ZX"
-term[21]="Vir ZY"
-term[22]="Vir ZZ"
-term[23]="Pres XX"
-term[24]="Pres XY"
-term[25]="Pres XZ"
-term[26]="Pres YX"
-term[27]="Pres YY"
-term[28]="Pres YZ"
-term[29]="Pres ZX"
-term[30]="Pres ZY"
-term[31]="Pres ZZ"
-term[32]="SurfTen"
-term[33]="T System"
-CD=${PWD}
 
+edr_name=$1
+edrFile="${edr_name}.edr"
 gmx_exe_address="$HOME/Git/GROMACS/gromacs-2020.1/build/bin/gmx"
 
-if [ "$RunOrRerun" == "run" ]
-then
-	edrFile="nvt_pr.edr"
-	RunOrRerun="run"
-elif [ "$RunOrRerun" == "rerun" ]
-then
-	edrFile="nvt_rerun.edr"
-	RunOrRerun="rerun"
-fi
+prop=( "Temperature" "Pressure" "Total Energy" "Potential" "LJ (SR)" "Disper. corr." "Coulomb (SR)" "Bond" "Angle" "Ryckaert")
+fname=("Temperature" "Pressure" "TotalEnergy"  "Potential" "LJ_SR"   "DisperCorr"   "Coulomb_SR"   "Bond" "Angle" "Ryckaert")
 
+CD=${PWD}
+
+# echo -ne '1' | $gmx_exe_address energy -f nvt_pr.edr > energy_out.tmp 2>&1
+# sed -n '/End your selection with an empty/,/Back Off! I just backed up/p' energy_out.tmp | tail +3 | head -n -3 > properties.tmp
+#p1=$(cat properties.tmp | awk '{print$2}')
+#p2=$(cat properties.tmp | awk '{print$4}')
+#p3=$(cat properties.tmp | awk '{print$6}')
+#p4=$(cat properties.tmp | awk '{print$8}')
+#props=(${p1} ${p2} ${p3} ${p4})
+
+
+mkdir -p EnergyOut
+echo "Nmolec" > ${CD}/EnergyOut/Nmolec.out
 for fol in I*/*/*; do 
 	cd $fol
-	$gmx_exe_address energy -f $edrFile < $HOME/Git/ITIC_GROMACS/Config/properties.inp | tee $RunOrRerun.out 
+	if [ -e "$edrFile" ]; then	# If the ITIC point was simulated 
+	$gmx_exe_address energy -f $edrFile < $HOME/Git/ITIC_GROMACS/Config/properties.inp | tee ${edr_name}.out
+		grep -A1 -R "\[ molecules \]" *.top | tail -n1 | awk '{print$2}' >> ${CD}/EnergyOut/Nmolec.out
+	fi
 	cd $CD
 done
 
-#read -p "Pause"
-
-mkdir -p EnergyOut
-for i in $(seq 1 1 33)
+for i in $(seq 0 1 $(echo "scale=1;${#prop[@]}-1" | bc))
 do
-	grep -R "${term[$i]}" I*/*/*/$RunOrRerun.out | tee  EnergyOut/$i.$RunOrRerun
-	sed -i "s/${term[$i]}//g" EnergyOut/$i.$RunOrRerun
-	sed -i "1i${term[$i]}" EnergyOut/$i.$RunOrRerun
+	grep -R "${prop[i]}" I*/*/*/${edr_name}.out | tee  EnergyOut/${fname[i]}.${edr_name}
+	sed -i "s/${prop[i]}//g" EnergyOut/${fname[i]}.${edr_name}
+	sed -i "1i${prop[i]}" EnergyOut/${fname[i]}.${edr_name}
 done
 
 cd EnergyOut
-for i in $(seq 1 1 33)
+for i in ${fname[@]}
 do
-	cat $i.$RunOrRerun | awk '{print $2}' > $i.$RunOrRerun.trim
+	cat $i.${edr_name} | awk '{print $2}' > $i.${edr_name}.tmp_avg
+	cat $i.${edr_name} | awk '{print $3}' > $i.${edr_name}.tmp_std
 done
 
-rm -rf 0.$RunOrRerun.trim
+rm -rf Density.out.tmp_avg
 
-cat  3.$RunOrRerun | awk '{print $1}' | cut -d "/" -f 1 >  3.$RunOrRerun.1
-cat  3.$RunOrRerun | awk '{print $1}' | cut -d "/" -f 2 >  3.$RunOrRerun.2
-cat  3.$RunOrRerun | awk '{print $1}' | cut -d "/" -f 3 >  3.$RunOrRerun.3
+cat  LJ_SR.${edr_name} | awk '{print $1}' | cut -d "/" -f 1 >  LJ_SR.${edr_name}.1
+cat  LJ_SR.${edr_name} | awk '{print $1}' | cut -d "/" -f 2 >  LJ_SR.${edr_name}.2
+cat  LJ_SR.${edr_name} | awk '{print $1}' | cut -d "/" -f 3 >  LJ_SR.${edr_name}.3
 
-paste 3.$RunOrRerun.1 3.$RunOrRerun.2 3.$RunOrRerun.3 > 0.$RunOrRerun
+paste LJ_SR.${edr_name}.1 LJ_SR.${edr_name}.2 LJ_SR.${edr_name}.3 > Density.out
+rm LJ_SR.${edr_name}.1 LJ_SR.${edr_name}.2 LJ_SR.${edr_name}.3
 
 while read p; do
 	if [ $(echo $p | awk '{print $1}') == "IT" ]
 	then
-		echo $p | awk '{print $3}' >> 0.$RunOrRerun.trim
+		echo $p | awk '{print $3}' >> Density.out.tmp_avg
 	elif [ $(echo $p | awk '{print $1}') == "IC" ]
 	then
-		echo $p | awk '{print $2}' >> 0.$RunOrRerun.trim
+		echo $p | awk '{print $2}' >> Density.out.tmp_avg
 	else
-		echo "Density" >> 0.$RunOrRerun.trim
+		echo "Density" >> Density.out.tmp_avg
 	fi
-done < 0.$RunOrRerun
+done < Density.out
+rm Density.out
+mv Density.out.tmp_avg Density.out
 
-paste 10.$RunOrRerun.trim 0.$RunOrRerun.trim 12.$RunOrRerun.trim 8.$RunOrRerun.trim 7.$RunOrRerun.trim 6.$RunOrRerun.trim 3.$RunOrRerun.trim 4.$RunOrRerun.trim 5.$RunOrRerun.trim 1.$RunOrRerun.trim 2.$RunOrRerun.trim > $RunOrRerun.res
-rm *.trim
+paste ${fname[0]}.${edr_name}.tmp_avg Density.out ${CD}/EnergyOut/Nmolec.out ${fname[1]}.${edr_name}.tmp_avg ${fname[2]}.${edr_name}.tmp_avg ${fname[3]}.${edr_name}.tmp_avg ${fname[4]}.${edr_name}.tmp_avg ${fname[5]}.${edr_name}.tmp_avg ${fname[6]}.${edr_name}.tmp_avg ${fname[7]}.${edr_name}.tmp_avg ${fname[8]}.${edr_name}.tmp_avg ${fname[9]}.${edr_name}.tmp_avg > ${edr_name}.avg
+paste ${fname[0]}.${edr_name}.tmp_std Density.out ${CD}/EnergyOut/Nmolec.out ${fname[1]}.${edr_name}.tmp_std ${fname[2]}.${edr_name}.tmp_std ${fname[3]}.${edr_name}.tmp_std ${fname[4]}.${edr_name}.tmp_std ${fname[5]}.${edr_name}.tmp_std ${fname[6]}.${edr_name}.tmp_std ${fname[7]}.${edr_name}.tmp_std ${fname[8]}.${edr_name}.tmp_std ${fname[9]}.${edr_name}.tmp_std > ${edr_name}.std
+
+rm *.tmp_avg
+rm *.tmp_std
 for i in $(seq 1 1 33)
 do
-	term[$i]=$(echo ${term[$i]} | sed 's/ //g')
+	prop[$i]=$(echo ${prop[$i]} | sed 's/ //g')
 done
-heading="${term[10]} ${term[0]} ${term[12]} ${term[8]} ${term[7]} ${term[6]} ${term[3]} ${term[4]} ${term[5]} ${term[1]} ${term[2]}"
-sed -i '1d' $RunOrRerun.res
-sed -i "1i$heading" $RunOrRerun.res
+
+sed -i "s/\-\-/nan/g" $CD/EnergyOut/*	# Sometimes gmx energy produces "--" instead of a valid estimate of error. Here we replace it with nan
+
+
+heading_avg="${fname[0]} Density Nmolec ${fname[1]} ${fname[2]} ${fname[3]} ${fname[4]} ${fname[5]} ${fname[6]} ${fname[7]} ${fname[8]} ${fname[9]}"
+heading_std="${fname[0]}_std Density Nmolec ${fname[1]}_std ${fname[2]}_std ${fname[3]}_std ${fname[4]}_std ${fname[5]}_std ${fname[6]}_std ${fname[7]}_std ${fname[8]}_std ${fname[9]}_std"
+
+sed -i '1d' ${edr_name}.avg
+sed -i '1d' ${edr_name}.std
+sed -i "1i$heading_avg" ${edr_name}.avg
+sed -i "1i$heading_std" ${edr_name}.std
+
 cd $CD
-mv EnergyOut/$RunOrRerun.res .
+mv EnergyOut/${edr_name}.avg .
+mv EnergyOut/${edr_name}.std .
 
