@@ -54,10 +54,9 @@ ref-p                    = 1.0
 
 ; options for bonds
 continuation             = some_continuation
-constraints              = all-bonds
-constraint-algorithm     = lincs
+constraints              = some_constraints
+constraint-algorithm     = some_constraint-algorithm
 lincs-order              = some_lincsorder
-lincs-iter               = 1
 
 ; velocity generation
 gen-vel                  = some_genvel

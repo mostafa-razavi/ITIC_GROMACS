@@ -46,6 +46,8 @@ genvel_pr=$(grep -R "gen-vel_pr" $config_file | awk '{print $3}')
 continuation_eq=$(grep -R "continuation_eq" $config_file | awk '{print $3}')
 continuation_pr=$(grep -R "continuation_pr" $config_file | awk '{print $3}')
 continuation_pr=$(grep -R "continuation_pr" $config_file | awk '{print $3}')
+constraints=$(grep -R "constraints" $config_file | awk '{print $3}')
+constraint_algorithm=$(grep -R "constraint-algorithm" $config_file | awk '{print $3}')
 lincsorder=$(grep -R "lincs-order" $config_file | awk '{print $3}')
 
 #===== Generate Files folder =====
@@ -64,6 +66,8 @@ sed -i "s/some_rswitch/$rvdwswitch/g" $CD/Files/nvt.mdp
 sed -i "s/some_coulombtype/$coulombtype/g" $CD/Files/nvt.mdp
 sed -i "s/some_rcoulomb/$rcoulomb/g" $CD/Files/nvt.mdp
 sed -i "s/some_rlist/$rlist/g" $CD/Files/nvt.mdp
+sed -i "s/some_constraints/$constraints/g" $CD/Files/nvt.mdp
+sed -i "s/some_constraint-algorithm/$constraint_algorithm/g" $CD/Files/nvt.mdp
 sed -i "s/some_lincsorder/$lincsorder/g" $CD/Files/nvt.mdp
 
 cp $CD/Files/nvt.mdp $CD/Files/nvt_eq.mdp
