@@ -23,7 +23,7 @@ coulombtype              = Cut-off
 rcoulomb                 = 1.4
 
 ; van der Waals
-vdwtype                  = Shift
+vdwtype                  = Cut-off
 vdw-modifier             = none
 rvdw-switch              = 1.0
 rvdw                     = 1.4

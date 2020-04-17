@@ -19,11 +19,11 @@ pbc                      = xyz
 rlist                    = 1.4
 
 ; Electrostatics
-coulombtype              = cutoff
+coulombtype              = Cut-off
 rcoulomb                 = 1.4
 
 ; van der Waals
-vdwtype                  = cutoff
+vdwtype                  = Cut-off
 vdw-modifier             = none
 rvdw-switch              = 0.0
 rvdw                     = 1.4
