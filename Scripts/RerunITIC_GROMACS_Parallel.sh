@@ -3,8 +3,8 @@ CD=${PWD}
 molec="$1"
 nrexcl="$2"
 Nproc="$3"
+gmx_exe_address="$4"
 
-gmx_exe_address="$HOME/Git/GROMACS/gromacs-2020.1/build/bin/gmx"
 
 rm -rf $CD/COMMANDS_excl.parallel
 
