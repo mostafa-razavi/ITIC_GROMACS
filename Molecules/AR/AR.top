@@ -1,0 +1,15 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+ARG               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   AR           1    ARG     AR      1      0         39.948   
+
+[ system ]
+argon
+
+[ molecules ]
+ARG Nmolec
