@@ -46,12 +46,12 @@ done
 
 rm -rf Density.out.tmp_avg
 
-cat  LJ_SR.${edr_name} | awk '{print $1}' | cut -d "/" -f 1 >  LJ_SR.${edr_name}.1
-cat  LJ_SR.${edr_name} | awk '{print $1}' | cut -d "/" -f 2 >  LJ_SR.${edr_name}.2
-cat  LJ_SR.${edr_name} | awk '{print $1}' | cut -d "/" -f 3 >  LJ_SR.${edr_name}.3
+cat  Temperature.${edr_name} | awk '{print $1}' | cut -d "/" -f 1 >  Temperature.${edr_name}.1
+cat  Temperature.${edr_name} | awk '{print $1}' | cut -d "/" -f 2 >  Temperature.${edr_name}.2
+cat  Temperature.${edr_name} | awk '{print $1}' | cut -d "/" -f 3 >  Temperature.${edr_name}.3
 
-paste LJ_SR.${edr_name}.1 LJ_SR.${edr_name}.2 LJ_SR.${edr_name}.3 > Density.out
-rm LJ_SR.${edr_name}.1 LJ_SR.${edr_name}.2 LJ_SR.${edr_name}.3
+paste Temperature.${edr_name}.1 Temperature.${edr_name}.2 Temperature.${edr_name}.3 > Density.out
+rm Temperature.${edr_name}.1 Temperature.${edr_name}.2 Temperature.${edr_name}.3
 
 while read p; do
 	if [ $(echo $p | awk '{print $1}') == "IT" ]
