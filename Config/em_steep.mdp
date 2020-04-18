@@ -47,6 +47,6 @@ pcoupl                   = no
 gen_vel                  = no 
 
 ; options for bonds
-constraints              = all-bonds
+constraints              = none
 constraint_algorithm     = lincs
 
