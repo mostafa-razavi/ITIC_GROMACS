@@ -9,7 +9,7 @@ force_filed_name="$HOME/Git/ITIC_GROMACS/Forcefields/trappeua.ff/forcefield.itp"
 config_filename="LJTC_rc14_2ns-4ns_1000xyz_lincs4.config"
 Nproc=$(nproc)
 select="all"
-gmx_exe_address="$HOME/Git/GROMACS/gromacs-2020.1/build/bin/gmx"
+gmx_exe_address="$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 
 #============Plots Settings=============
 LitsatExt="trappegmx-itic-razavi trappe-itic-razavi"
