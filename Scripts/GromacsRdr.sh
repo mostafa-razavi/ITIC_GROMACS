@@ -46,12 +46,12 @@ done
 
 rm -rf Density.out.tmp_avg
 
-cat  Temperature.${edr_name} | awk '{print $1}' | cut -d "/" -f 1 >  Temperature.${edr_name}.1
-cat  Temperature.${edr_name} | awk '{print $1}' | cut -d "/" -f 2 >  Temperature.${edr_name}.2
-cat  Temperature.${edr_name} | awk '{print $1}' | cut -d "/" -f 3 >  Temperature.${edr_name}.3
+cat  Potential.${edr_name} | awk '{print $1}' | cut -d "/" -f 1 >  Potential.${edr_name}.1
+cat  Potential.${edr_name} | awk '{print $1}' | cut -d "/" -f 2 >  Potential.${edr_name}.2
+cat  Potential.${edr_name} | awk '{print $1}' | cut -d "/" -f 3 >  Potential.${edr_name}.3
 
-paste Temperature.${edr_name}.1 Temperature.${edr_name}.2 Temperature.${edr_name}.3 > Density.out
-rm Temperature.${edr_name}.1 Temperature.${edr_name}.2 Temperature.${edr_name}.3
+paste Potential.${edr_name}.1 Potential.${edr_name}.2 Potential.${edr_name}.3 > Density.out
+rm Potential.${edr_name}.1 Potential.${edr_name}.2 Potential.${edr_name}.3
 
 while read p; do
 	if [ $(echo $p | awk '{print $1}') == "IT" ]
