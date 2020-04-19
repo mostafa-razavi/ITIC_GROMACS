@@ -29,7 +29,7 @@ config_file="$HOME/Git/ITIC_GROMACS/Config/${config_filename}"
 
 dt=$(grep -R "^dt" $config_file | awk '{print $3}')
 integrator=$(grep -R "integrator" $config_file | awk '{print $3}')
-tcouple=$(grep -R "tcoupl" $config_file | awk '{print $3}')
+tcoupl=$(grep -R "tcoupl" $config_file | awk '{print $3}')
 nsteps_eq=$(grep -R "nsteps_eq" $config_file | awk '{print $3}')
 nsteps_pr=$(grep -R "nsteps_pr" $config_file | awk '{print $3}')
 nstxout=$(grep -R "nstxout" $config_file | awk '{print $3}')
@@ -58,7 +58,7 @@ if [ -e "$CD/Files" ]; then echo "Files directory exists. Exiting..."; exit; els
 cp $ConfigDir/nvt.mdp $CD/Files/nvt.mdp
 
 sed -i "s/some_integrator/$integrator/g" $CD/Files/nvt.mdp
-sed -i "s/some_Tcouple/$tcouple/g" $CD/Files/nvt.mdp
+sed -i "s/some_tcoupl/$tcoupl/g" $CD/Files/nvt.mdp
 sed -i "s/some_dt/$dt/g" $CD/Files/nvt.mdp
 sed -i "s/some_nstlog/$nstlog/g" $CD/Files/nvt.mdp
 sed -i "s/some_nstenergy/$nstenergy/g" $CD/Files/nvt.mdp
