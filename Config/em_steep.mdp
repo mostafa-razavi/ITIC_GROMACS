@@ -14,7 +14,7 @@ nstenergy                = 1
 
 ; Neighborsearching and short-range nonbonded interactions
 cutoff-scheme            = Verlet
-nstlist                  = 10
+nstlist                  = 1
 pbc                      = xyz
 rlist                    = 1.4
 
