@@ -3,22 +3,22 @@ source /usr/local/gromacs/bin/GMXRC
 CD=${PWD}
 
 Forcefield_name="TraPPE-GMX"
+Forcefield_ext="trappegmx-itic-razavi"
 molecules_array="C3 C4 C5"
 force_filed_name="$HOME/Git/ITIC_GROMACS/Forcefields/trappeua.ff/forcefield.itp"
 
-config_filename="LJTC_rc14_2ns-4ns_1000xyz_lincs4.config"
+config_filename="TC_RC14_LF_BR_2NS-4NS_LINCS8.config"
 Nproc=$(nproc)
 select="all"
 gmx_exe_address="$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 
 #============Plots Settings=============
-LitsatExt="trappegmx-itic-razavi trappe-itic-razavi"
-LitsatLabel="TraPPE-GMX TraPPE-GOMC"
+LitsatExt="$Forcefield_ext trappe-itic-razavi"
+LitsatLabel="$Forcefield_name TraPPE-GOMC"
 ITIC_trhozures_filename="trhozures.res TraPPE.res"
 ITIC_trhozures_label="$Forcefield_name TraPPE-GOMC"
 trimZ="no-trimZ" 
 trimU="yes-trimU"
-Forcefield_ext="trappegmx-itic-razavi"
 
 #======================================
 rm -rf ${CD}/COMMANDS.parallel
@@ -60,6 +60,6 @@ do
        # Plot
     bash $HOME/Git/TranSFF/Scripts/ITIC/ITIC.sh $molec trhozures.res ${molec}.${Forcefield_ext}
     bash $HOME/Git/TranSFF/Scripts/ITIC/plot_vle_comparison.sh $molec "$LitsatExt" "$LitsatLabel" ${molec}_vle.png
-    bash $HOME/Git/TranSFF/Scripts/ITIC/plot_zures.sh $molec "trhozures.res TraPPE.res" "TraPPE-GMX TraPPE-GOMC"
+    bash $HOME/Git/TranSFF/Scripts/ITIC/plot_zures.sh $molec "$ITIC_trhozures_filename" "$ITIC_trhozures_label"
 done
 
