@@ -3,7 +3,7 @@ source /usr/local/gromacs/bin/GMXRC
 CD=${PWD}
 
 Forcefield_name="TraPPE-GMX"
-Forcefield_ext="trappegmx-itic-razavi"
+Forcefield_ext="trappe-itic-razavi-gmx"
 molecules_array="C3 C4 C5"
 force_filed_name="$HOME/Git/ITIC_GROMACS/Forcefields/trappeua.ff/forcefield.itp"
 
@@ -16,7 +16,7 @@ gmx_exe_address="$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 LitsatExt="$Forcefield_ext trappe-itic-razavi"
 LitsatLabel="$Forcefield_name TraPPE-GOMC"
 ITIC_trhozures_filename="trhozures.res TraPPE.res"
-ITIC_trhozures_label="$Forcefield_name TraPPE-GOMC"
+ITIC_trhozures_label="$LitsatLabel"
 trimZ="no-trimZ" 
 trimU="yes-trimU"
 
