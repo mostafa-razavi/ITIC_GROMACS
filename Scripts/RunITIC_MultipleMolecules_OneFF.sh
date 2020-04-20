@@ -1,6 +1,7 @@
 #!/bin/bash
 source /usr/local/gromacs/bin/GMXRC
 CD=${PWD}
+post_process_only="$1"
 
 molecules_array="C3 C4 C5"
 Nproc=$(nproc)
@@ -21,24 +22,31 @@ ITIC_trhozures_label="$LitsatLabel"
 trimZ="no-trimZ" 
 trimU="yes-trimU"
 
-#======================================
-rm -rf ${CD}/COMMANDS.parallel
-molecules_array=($molecules_array)
-for molec in "${molecules_array[@]}"
-do 
-    mkdir ${CD}/${molec}
-    cd ${CD}/${molec}
-    if [ "$select" == "all" ]; then
-        select_itic_points="all"
-    else
-        select_itic_points=$(cat $HOME/Git/TranSFF/SelectITIC/${molec}_${select}.trho)
-    fi
-    bash $HOME/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh $molec $force_field_path $config_filename "$select_itic_points" $gmx_exe_address no-override no
-    cat COMMANDS.parallel >> ${CD}/COMMANDS.parallel
-    cd $CD
-done
 
-parallel --jobs $Nproc < COMMANDS.parallel
+
+
+
+#======================================
+molecules_array=($molecules_array)
+
+if [ "$post_process_only" != "yes" ]; then
+	rm -rf ${CD}/COMMANDS.parallel
+	for molec in "${molecules_array[@]}"
+	do 
+	    mkdir ${CD}/${molec}
+	    cd ${CD}/${molec}
+	    if [ "$select" == "all" ]; then
+		select_itic_points="all"
+	    else
+		select_itic_points=$(cat $HOME/Git/TranSFF/SelectITIC/${molec}_${select}.trho)
+	    fi
+	    bash $HOME/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh $molec $force_field_path $config_filename "$select_itic_points" $gmx_exe_address no-override no
+	    cat COMMANDS.parallel >> ${CD}/COMMANDS.parallel
+	    cd $CD
+	done
+
+	parallel --jobs $Nproc < COMMANDS.parallel
+fi
 
 for molec in "${molecules_array[@]}"
 do 
@@ -49,6 +57,7 @@ do
 
        # Run excl 
     bash $HOME/Git/ITIC_GROMACS/Scripts/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address #bash $HOME/Git/ITIC_GROMACS/Scripts/RunExcl_GROMACS_Parallel.sh $molec 50 $Nproc 500000
+    
 
        # Get averages
     rm -rf EnergyOut/ *.res
