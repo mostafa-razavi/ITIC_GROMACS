@@ -2,14 +2,15 @@
 source /usr/local/gromacs/bin/GMXRC
 CD=${PWD}
 
-Forcefield_name="TraPPE-GMX"
-Forcefield_ext="trappe-itic-razavi-gmx"
 molecules_array="C3 C4 C5"
-force_filed_name="$HOME/Git/ITIC_GROMACS/Forcefields/trappeua.ff/forcefield.itp"
-
-config_filename="TC_RC14_LF_BR_2NS-4NS_LINCS8.config"
 Nproc=$(nproc)
 select="all"
+
+Forcefield_name="TraPPE-GMX"
+Forcefield_ext="trappe-itic-razavi-gmx"
+force_field_path="$HOME/Git/ITIC_GROMACS/Forcefields/trappeua.ff/forcefield.itp"
+
+config_filename="TC_RC14_LF_BR_2NS-4NS_LINCS8.config"
 gmx_exe_address="$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 
 #============Plots Settings=============
@@ -32,7 +33,7 @@ do
     else
         select_itic_points=$(cat $HOME/Git/TranSFF/SelectITIC/${molec}_${select}.trho)
     fi
-    bash $HOME/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh $molec $force_filed_name $config_filename "$select_itic_points" $gmx_exe_address no-override no
+    bash $HOME/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh $molec $force_field_path $config_filename "$select_itic_points" $gmx_exe_address no-override no
     cat COMMANDS.parallel >> ${CD}/COMMANDS.parallel
     cd $CD
 done
