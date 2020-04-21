@@ -11,7 +11,12 @@
 [ atomtypes ]
 ; _O indicates the (pseduo)atom is bonded to an oxygen. _C indicates the
 ; (pseudo)atom is bonded to a carbon.
-; name      bond_type    mass       charge   ptype   sigma        epsilon
+;
+;   A [kJ/mol] = 6*eps[K]/(alpha-6)*exp(alpha)*0.008314462811444
+;   B [1/nm] = alpha/rmin[A] * 10
+;   C [kJ/mol*nm^6] = eps[K]*alpha*rmin[A]^6/(alpha-6) * 0.008314462811444 / 10^6
+;
+; name      bond_type    mass       charge   ptype   A [kJ/mol]        B [1/nm]       C [kJ/mol*nm^6]
   AR                    39.94800   0.000    A       1017718 36.6300366300366 0.00614244
   CH4                    16.04300   0.000    A       3.73000e-01  1.23054e+00 1; CH4  change this 
   O         O            15.99940  -0.700    A       3.02000e-01  7.73245e-01 1; CHX-[O]-H
