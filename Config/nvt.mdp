@@ -14,7 +14,7 @@ nstenergy                = some_nstenergy
 nstxout-compressed       = 0
 
 ; Neighborsearching and short-range nonbonded interactions
-cutoff-scheme            = Verlet
+cutoff-scheme            = some_cutoffscheme
 nstlist                  = 10
 pbc                      = xyz
 rlist                    = some_rlist

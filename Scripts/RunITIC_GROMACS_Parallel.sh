@@ -51,6 +51,7 @@ continuation_pr=$(grep -R "continuation_pr" $config_file | awk '{print $3}')
 constraints=$(grep -R "constraints" $config_file | awk '{print $3}')
 constraint_algorithm=$(grep -R "constraint-algorithm" $config_file | awk '{print $3}')
 lincsorder=$(grep -R "lincs-order" $config_file | awk '{print $3}')
+cutoffscheme=$(grep -R "cutoff-scheme" $config_file | awk '{print $3}')
 
 #===== Generate Files folder =====
 if [ -e "$CD/Files" ]; then echo "Files directory exists. Exiting..."; exit; else mkdir $CD/Files; fi
@@ -73,6 +74,7 @@ sed -i "s/some_rlist/$rlist/g" $CD/Files/nvt.mdp
 sed -i "s/some_constraints/$constraints/g" $CD/Files/nvt.mdp
 sed -i "s/some_constraint-algorithm/$constraint_algorithm/g" $CD/Files/nvt.mdp
 sed -i "s/some_lincsorder/$lincsorder/g" $CD/Files/nvt.mdp
+sed -i "s/some_cutoffscheme/$cutoffscheme/g" $CD/Files/nvt.mdp
 
 cp $CD/Files/nvt.mdp $CD/Files/nvt_eq.mdp
 cp $CD/Files/nvt.mdp $CD/Files/nvt_pr.mdp
@@ -94,6 +96,9 @@ cp $MoleculesDir/${molecule}/${molecule}.pdb $CD/Files
 cp $MoleculesDir/${molecule}/${molecule}.top $CD/Files
 cp $ConfigDir/em_steep.mdp $CD/Files
 cp $ConfigDir/em_l-bfgs.mdp $CD/Files
+
+sed -i "s/some_cutoffscheme/$cutoffscheme/g" $CD/Files/em_steep.mdp
+sed -i "s/some_cutoffscheme/$cutoffscheme/g" $CD/Files/em_l-bfgs.mdp
 
 sed -i "s:some_forcefield_itp:$force_field_file:g" $CD/Files/${molecule}.top
 
