@@ -70,6 +70,6 @@ do
        # Plot
     bash $HOME/Git/TranSFF/Scripts/ITIC/ITIC.sh $molec trhozures.res ${molec}.${Forcefield_ext}
     bash $HOME/Git/TranSFF/Scripts/ITIC/plot_vle_comparison.sh $molec "$LitsatExt" "$LitsatLabel" ${molec}_vle.png
-    bash $HOME/Git/TranSFF/Scripts/ITIC/plot_zures.sh $molec "$ITIC_trhozures_filename" "$ITIC_trhozures_label"
+    bash $HOME/Git/TranSFF/Scripts/ITIC/plot_zures.sh $molec "$ITIC_trhozures_filename" "$ITIC_trhozures_label" $trimZ $trimU
 done
 
