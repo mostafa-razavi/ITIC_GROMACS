@@ -1,5 +1,7 @@
 #!/bin/bash
 source /usr/local/gromacs/bin/GMXRC
+export GMX_MAXCONSTRWARN=-1
+
 CD=${PWD}
 post_process_only="$1"
 
