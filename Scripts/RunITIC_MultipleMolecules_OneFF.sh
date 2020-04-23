@@ -13,7 +13,7 @@ Forcefield_name="TraPPE-GMX"
 Forcefield_ext="trappe-itic-razavi-gmx"
 force_field_path="$HOME/Git/ITIC_GROMACS/Forcefields/TraPPE/forcefield.itp"
 
-config_filename="TC_RC14_LF_BR_2NS-4NS_LINCS8.config"
+config_filename="TC_RC14_LF_BR_2NS-4NS_LINCS8_CSV.config"
 gmx_exe_address="$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 
 #============Plots Settings=============
