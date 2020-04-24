@@ -58,7 +58,7 @@ do
     MW=$(grep "MW:" ${ITIC_file_name} | awk '{ print $2}')
 
        # Run excl 
-    bash $HOME/Git/ITIC_GROMACS/Scripts/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address #bash $HOME/Git/ITIC_GROMACS/Scripts/RunExcl_GROMACS_Parallel.sh $molec 50 $Nproc 500000
+    bash $HOME/Git/ITIC_GROMACS/Scripts/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address #bash $HOME/Git/ITIC_GROMACS/Scripts/RunExcl_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address 500000
     
 
        # Get averages

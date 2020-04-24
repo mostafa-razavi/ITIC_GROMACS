@@ -5,6 +5,7 @@ nrexcl="$2"
 Nproc="$3"
 gmx_exe_address="$4"
 
+export GMX_MAXCONSTRWARN=-1
 
 rm -rf $CD/COMMANDS_excl.parallel
 

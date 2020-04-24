@@ -5,6 +5,7 @@
 set -e
 CD=${PWD}
 source /usr/local/gromacs/bin/GMXRC
+export GMX_MAXCONSTRWARN=-1
 
 molecule=$1										# E.g. C1, C2, C4, C12, etc
 force_field_file=$2								# E.g. C2_TraPPE-UA.par (in Forcefileds_path) or /path/to/file/TraPPE-UA.par

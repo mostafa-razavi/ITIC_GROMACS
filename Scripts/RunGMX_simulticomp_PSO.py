@@ -5,9 +5,9 @@ from multiprocessing import Process, Pool
 import numpy
 
 # Input parameters ##################
-run_name = "SimulPSO_C4_select3sat2lowrho1"
-molecules_array = ["C4"]
-datafile_keyword_array=[ "REFPROP"]
+run_name = "SimulPSO_C2-C5-C8_select3sat2lowrho1"
+molecules_array = ["C2", "C5", "C8"]
+datafile_keyword_array=[ "REFPROP", "REFPROP", "REFPROP"]
 site_names_array = ["CH3", "CH2"]
 
 ITIC_subset_name = "select3sat2lowrho1"
@@ -18,7 +18,7 @@ raw_ff_path = "$HOME/Git/ITIC_GROMACS/Forcefields/Buck-raw"
 config_filename="TC_RC14_LF_BR_0.5NS-0.5NS_LINCS8_CSG.config"
 gmx_exe_address = "$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 
-Nproc_per_particle = "3"
+Nproc_per_particle = "2"
 
 nnn = None
 sig_sigfig = 3
@@ -26,14 +26,14 @@ eps_sigfig = 1
 nnn_sigfig = 1
 
 # Set PSO parameters ################
-swarm_size = 11
+swarm_size = 16
 max_iterations = 20
 tol = 1e-6
 
 # Set PSO bounds and initial guesses ################
-lb = [3.594, 119.6, 14.0, 3.860, 63.5, 20.0]
-ub = [4.594, 139.6, 18.0, 4.860, 83.5, 24.0]
-initial_guess = [[4.094, 129.6, 16.0, 4.360, 73.5, 22.0], [], [], [], [], [], [], [], [], [], []]
+lb = [3.5, 110, 10, 3.5, 60, 10]
+ub = [4.9, 150, 25, 4.9, 90, 25]
+initial_guess = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
 nnbp = 3
 
 
