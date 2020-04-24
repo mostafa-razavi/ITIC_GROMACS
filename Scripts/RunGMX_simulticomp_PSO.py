@@ -3,6 +3,8 @@ sys.path.insert(1, os.path.expanduser('~') +'/Git/TranSFF/Scripts/')
 from pso import parallel_pso, serial_pso, parallel_pso_auxiliary
 from multiprocessing import Process, Pool
 import numpy
+import os.path
+from os import path
 
 # Input parameters ##################
 run_name = "SimulPSO_C2-C5-C8_select3sat2lowrho1"
@@ -107,9 +109,14 @@ def objective_function(x):
         arg10 = config_filename
         arg11 = LJ_or_BUCK
         command = "bash $HOME/Git/ITIC_GROMACS/Scripts/RunGMX_simulticomp.sh" + " " + arg1 + " " + arg2+  " " + arg3 + " " + arg4 + " " + arg5 + " " + arg6 + " " + arg7 + " " + arg8 + " " + arg9 + " " + arg10 + " " + arg11 #+ " " + arg12 + " " + arg13 + " " + arg14 + " " + arg15 + " " + arg16
-        print(command)
-        os.system(command)
-        
+
+        particel_folder_name = prefix + "_" + site_sig_eps_nnn
+        if path.exists(particel_folder_name)):
+            print("Warning: " + particel_folder_name + " folder exists. The program proceeds assuming that the folder contains valid data.")
+        else    
+            print(command)
+            os.system(command)
+
         return 
     
     run_particle_input_array = []
