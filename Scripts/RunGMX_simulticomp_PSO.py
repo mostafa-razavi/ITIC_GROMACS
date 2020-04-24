@@ -28,14 +28,14 @@ eps_sigfig = 1
 nnn_sigfig = 1
 
 # Set PSO parameters ################
-swarm_size = 16
+swarm_size = 6
 max_iterations = 20
 tol = 1e-6
 
 # Set PSO bounds and initial guesses ################
 lb = [3.5, 110, 10, 3.5, 60, 10]
 ub = [4.9, 150, 25, 4.9, 90, 25]
-initial_guess = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
+initial_guess = [[], [], [], [], [], []]
 nnbp = 3
 
 
@@ -111,9 +111,9 @@ def objective_function(x):
         command = "bash $HOME/Git/ITIC_GROMACS/Scripts/RunGMX_simulticomp.sh" + " " + arg1 + " " + arg2+  " " + arg3 + " " + arg4 + " " + arg5 + " " + arg6 + " " + arg7 + " " + arg8 + " " + arg9 + " " + arg10 + " " + arg11 #+ " " + arg12 + " " + arg13 + " " + arg14 + " " + arg15 + " " + arg16
 
         particel_folder_name = prefix + "_" + site_sig_eps_nnn
-        if path.exists(particel_folder_name)):
+        if path.exists(particel_folder_name):
             print("Warning: " + particel_folder_name + " folder exists. The program proceeds assuming that the folder contains valid data.")
-        else    
+        else:    
             print(command)
             os.system(command)
 
@@ -149,6 +149,7 @@ def objective_function(x):
     print("objective_array: ", objective_array)
     print()
 
+    
     return objective_array  ####################### End of objective_function
 
 print("initial_guess: ", initial_guess)
