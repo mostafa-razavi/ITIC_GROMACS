@@ -256,6 +256,7 @@ for rho in "${rhosIC[@]}"
 
 		line="source /usr/local/gromacs/bin/GMXRC; \
 			cd $CD/IC/${rho}/${T}; \
+			export GMX_MAXCONSTRWARN=-1; \
 			$gmx_exe_address insert-molecules -ci ${molecule}.pdb -nmol $N -try 100000 -box $L $L $L -o ${molecule}_box.gro; \
 			$gmx_exe_address grompp -f em_steep.mdp -c ${molecule}_box.gro -p ${molecule}.top -o em_steep.tpr; \
 			$gmx_exe_address mdrun -nt 1 -deffnm em_steep; \
@@ -320,6 +321,7 @@ for T in "${TsIT[@]}"
 
 		line="source /usr/local/gromacs/bin/GMXRC; \
 			cd $CD/IT/${T}/${rho}; \
+			export GMX_MAXCONSTRWARN=-1; \
 			$gmx_exe_address insert-molecules -ci ${molecule}.pdb -nmol $N -box $L $L $L -o ${molecule}_box.gro; \
 			$gmx_exe_address grompp -f em_steep.mdp -c ${molecule}_box.gro -p ${molecule}.top -o em_steep.tpr; \
 			$gmx_exe_address mdrun -nt 1 -deffnm em_steep; \
