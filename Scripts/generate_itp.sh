@@ -43,10 +43,6 @@ cooked_itp_file_path="$cooked_itp_folder/ffnonbonded.itp"
 
 cp $raw_itp_path $cooked_itp_file_path
 
-site_array=()
-sig_array=()
-eps_array=()
-alpha_array=()
 
 IFS='_' read -ra site_sig_eps_n_array <<< "$site_sig_eps_n"
 for i in $(seq 0 $(echo "${#site_sig_eps_n_array[@]}-1" | bc)) 
@@ -55,73 +51,22 @@ do
     
 
     if [ "$LJ_or_BUCK" == "LJ" ]; then
-        sig=$(echo "scale=15; ${sitesigepsn_array[1]}*0.1" | bc | awk '{printf "%f", $0}')                                     # A to nm
-        eps=$(echo "scale=15; ${sitesigepsn_array[2]}/120.272443230099" | bc | awk '{printf "%f", $0}')                        # K to kJ/mol
-
-        site=${sitesigepsn_array[0]}
-        sig=${sitesigepsn_array[1]}
-        eps=${sitesigepsn_array[2]}
-
-        sed -i "s/some_nbp1_${site}/$sig/g" $cooked_itp_file_path
-        sed -i "s/some_nbp2_${site}/$eps/g" $cooked_itp_file_path
-
+        sitesigepsn_array[1]=$(echo "scale=15; ${sitesigepsn_array[1]}*0.1" | bc | awk '{printf "%f", $0}')                                     # A to nm
+        sitesigepsn_array[2]=$(echo "scale=15; ${sitesigepsn_array[2]}/120.272443230099" | bc | awk '{printf "%f", $0}')                        # K to kJ/mol
     elif [ "$LJ_or_BUCK" == "BUCK" ]; then
-
-        site=${sitesigepsn_array[0]}
-        sig=${sitesigepsn_array[1]}
+        rmin=${sitesigepsn_array[1]}
         eps=${sitesigepsn_array[2]}
         alpha=${sitesigepsn_array[3]}
-
-        site_array=( "${site_array[@]}" "$site" )
-        sig_array=( "${sig_array[@]}" "$sig" )
-        eps_array=( "${eps_array[@]}" "$eps" )
-        alpha_array=( "${alpha_array[@]}" "$alpha" )
-
-        # Convert sig, eps, and alpha set to A, B, and C
-        tmp=$(python3.6 $HOME/Git/ITIC_GROMACS/Scripts/Buckingham_get_rmin-A-B-C.py $sig $eps $alpha)
-        A_coef=$(echo "$tmp" | awk '{print$2}')
-        B_coef=$(echo "$tmp" | awk '{print$3}')
-        C_coef=$(echo "$tmp" | awk '{print$4}')
-
-        sed -i "s/some_nbp1_${site}/$A_coef/g" $cooked_itp_file_path
-        sed -i "s/some_nbp2_${site}/$B_coef/g" $cooked_itp_file_path
-        sed -i "s/some_nbp3_${site}/$C_coef/g" $cooked_itp_file_path
+        # Convert rmin, eps, and alpha set to A, B, and C
+        sitesigepsn_array[1]=$(echo "scale=15; 6*$eps/($alpha-6)*e($alpha)*0.008314462811444" | bc -l | awk '{printf "%f", $0}')                 # A [kJ/mol] = 6*eps[K]/(alpha-6)*exp(alpha)*0.008314462811444
+        sitesigepsn_array[2]=$(echo "scale=15; $alpha/$rmin * 10" | bc | awk '{printf "%f", $0}')                                                # B [1/nm] = alpha/rmin[A] * 10
+        sitesigepsn_array[3]=$(echo "scale=15; $eps*$alpha*($rmin)^6/($alpha-6) * 0.008314462811444 / (10)^6" | bc | awk '{printf "%f", $0}')    # C [kJ/mol*nm^6] = eps[K]*alpha*rmin[A]^6/(alpha-6) * 0.008314462811444 / 10^6
     fi
-done
-
-
-# Apply combining rules for cross-inteactions
-for i in $(seq 0 $(echo "${#site_array[@]}-1" | bc))
-do
-    for j in $(seq $((i+1)) $(echo "${#site_array[@]}-1" | bc))
-    do
-        sig1=${sig_array[i]}
-        sig2=${sig_array[j]}
-
-        eps1=${eps_array[i]}
-        eps2=${eps_array[j]}
-
-        alpha1=${alpha_array[i]}
-        alpha2=${alpha_array[j]}
-
-        combined_sigma=$(echo "scale=15; ($sig1+$sig2)/2" | bc -l | awk '{printf "%f", $0}')                 
-        combined_epsilon=$(echo "scale=15; sqrt($eps1*$eps2)" | bc -l | awk '{printf "%f", $0}')                 
-        combined_alpha=$(echo "scale=15; sqrt($alpha1*$alpha2)" | bc -l | awk '{printf "%f", $0}') 
-                        
-        # Convert sig, eps, and alpha set to A, B, and C
-        tmp=$(python3.6 $HOME/Git/ITIC_GROMACS/Scripts/Buckingham_get_rmin-A-B-C.py $combined_sigma $combined_epsilon $combined_alpha)
-        A_coef=$(echo "$tmp" | awk '{print$2}')
-        B_coef=$(echo "$tmp" | awk '{print$3}')
-        C_coef=$(echo "$tmp" | awk '{print$4}')
-
-        sed -i "s/some_cnbp1_${site_array[i]}-some_cnbp1_${site_array[j]}/$A_coef/g" $cooked_itp_file_path
-        sed -i "s/some_cnbp2_${site_array[i]}-some_cnbp2_${site_array[j]}/$B_coef/g" $cooked_itp_file_path
-        sed -i "s/some_cnbp3_${site_array[i]}-some_cnbp3_${site_array[j]}/$C_coef/g" $cooked_itp_file_path
-    done
+    sed -i "s/some_nbp1_${sitesigepsn_array[0]}/${sitesigepsn_array[1]}/g" $cooked_itp_file_path
+    sed -i "s/some_nbp2_${sitesigepsn_array[0]}/${sitesigepsn_array[2]}/g" $cooked_itp_file_path
+    sed -i "s/some_nbp3_${sitesigepsn_array[0]}/${sitesigepsn_array[3]}/g" $cooked_itp_file_path
 done
 
 sed -i '/some_nbp/d' $cooked_itp_file_path
-sed -i '/some_cnbp/d' $cooked_itp_file_path
-
 
 echo $all_sites_string $cooked_itp_file_path
