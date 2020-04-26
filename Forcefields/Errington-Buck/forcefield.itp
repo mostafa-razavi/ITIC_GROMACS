@@ -9,7 +9,7 @@
 
 [ defaults ]
 ; nbfunc    comb-rule   gen-pairs
-  2         2           no       
+  2         1           no       
 
 #include "ffnonbonded.itp"
 #include "ffbonded.itp"

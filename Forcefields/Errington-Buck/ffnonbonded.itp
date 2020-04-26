@@ -11,3 +11,9 @@
 ; name      bond_type    mass       charge   ptype   A [kJ/mol]        B [1/nm]       C [kJ/mol*nm^6]
   CH3_C     CH3          15.03500   0.000    A       5745160.38945862 39.0804976232137 0.008119299558173; [CH3]-CHX  
   CH2_C     CH2          14.02700   0.000    A       821545088.923146 50.4593011701854 0.005771821987206; (CHX)2-[CH2]
+
+
+; This force field uses a combining rule that is different than GROMAC's default combining rule for Buckingham potential, hence they should be specified manually
+  [ nonbond_params ]
+; i      j      funct    A [kJ/mol]        B [1/nm]       C [kJ/mol*nm^6]
+  CH3_C   CH2_C   2   53655107.8149111	44.3972370607998	0.006794175350088
