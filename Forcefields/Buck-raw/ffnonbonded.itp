@@ -22,9 +22,9 @@
 ; This force field uses a combining rule that is different than GROMAC's default combining rule for Buckingham potential, hence they should be specified manually
   [ nonbond_params ]
 ; i      j      funct    A [kJ/mol]        B [1/nm]       C [kJ/mol*nm^6]
-CH3_C CH2_C     2         some_cnbp1_CH3-some_cnbp1_CH2 some_cnbp2_CH3-some_cnbp1_CH2 some_cnbp3_CH3-some_cnbp1_CH2
-CH3_C CH_C      2         some_cnbp1_CH3-some_cnbp1_CH1 some_cnbp2_CH3-some_cnbp1_CH1 some_cnbp3_CH3-some_cnbp1_CH1
-CH3_C C_C       2         some_cnbp1_CH3-some_cnbp1_CT  some_cnbp2_CH3-some_cnbp1_CT  some_cnbp3_CH3-some_cnbp1_CT 
-CH2_C CH_C      2         some_cnbp1_CH2-some_cnbp1_CH1 some_cnbp2_CH2-some_cnbp1_CH1 some_cnbp3_CH2-some_cnbp1_CH1
-CH2_C C_C       2         some_cnbp1_CH2-some_cnbp1_CT  some_cnbp2_CH2-some_cnbp1_CT  some_cnbp3_CH2-some_cnbp1_CT 
-CH_C C_C        2         some_cnbp1_CH1-some_cnbp1_CT  some_cnbp2_CH1-some_cnbp1_CT  some_cnbp3_CH1-some_cnbp1_CT 
+CH3_C    CH2_C     2        some_cnbp1_CH3-some_cnbp1_CH2 some_cnbp2_CH3-some_cnbp2_CH2 some_cnbp3_CH3-some_cnbp3_CH2
+CH3_C    CH_C      2        some_cnbp1_CH3-some_cnbp1_CH1 some_cnbp2_CH3-some_cnbp2_CH1 some_cnbp3_CH3-some_cnbp3_CH1         
+CH3_C    C_C       2        some_cnbp1_CH3-some_cnbp1_CT  some_cnbp2_CH3-some_cnbp2_CT  some_cnbp3_CH3-some_cnbp3_CT
+CH2_C    CH_C      2        some_cnbp1_CH2-some_cnbp1_CH1 some_cnbp2_CH2-some_cnbp2_CH1 some_cnbp3_CH2-some_cnbp3_CH1
+CH2_C    C_C       2        some_cnbp1_CH2-some_cnbp1_CT  some_cnbp2_CH2-some_cnbp2_CT  some_cnbp3_CH2-some_cnbp3_CT
+CH_C     C_C       2        some_cnbp1_CH1-some_cnbp1_CT  some_cnbp2_CH1-some_cnbp2_CT  some_cnbp3_CH1-some_cnbp3_CT
