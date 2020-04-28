@@ -1,0 +1,44 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+some__molec_name               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   some__site1_name          1    some__molec_name     C1      1      0         some__mw1_name
+     2   some__site2_name          1    some__molec_name     C2      1      0         some__mw2_name
+     3   some__site3_name          1    some__molec_name     C3      1      0         some__mw3_name
+     4   some__site4_name          1    some__molec_name     C4      1      0         some__mw4_name
+     5   some__site5_name          1    some__molec_name     C5      1      0         some__mw5_name
+     6   some__site6_name          1    some__molec_name     C6      1      0         some__mw6_name
+     7   some__site7_name          1    some__molec_name     C7      1      0         some__mw7_name
+     8   some__site8_name          1    some__molec_name     C8      1      0         some__mw8_name
+     9   some__site9_name          1    some__molec_name     C9      1      0         some__mw9_name
+     10  some__site10_name         1    some__molec_name     C10     1      0         some__mw10_name
+     11  some__site11_name         1    some__molec_name     C11     1      0         some__mw11_name
+     12  some__site12_name         1    some__molec_name     C12     1      0         some__mw12_name
+     13  some__site13_name         1    some__molec_name     C13     1      0         some__mw13_name
+     14  some__site14_name         1    some__molec_name     C14     1      0         some__mw14_name
+
+[ bonds ]
+; i	j
+some__bonds_line
+
+
+[ angles ]
+; i	j	k
+some__angles_line     
+
+
+[ dihedrals ]
+; i	j	k 	l	type
+some__dihedrals_line
+    
+
+[ system ]
+some__system_name
+
+[ molecules ]
+some__molec_name Nmolec
+

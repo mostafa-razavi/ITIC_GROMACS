@@ -1,0 +1,43 @@
+
+CASN:   463-82-1
+CNAM:   PROPANE
+ FAM:   DIMETHYLALKANES
+FORM:   C5H12
+INAM:   NEOPENTANE
+NAME:   NEOPENTANE
+SMIL:   CC(C)(C)C
+STRU:   C(CH3)4
+
+  MW:    72.14878
+  TC:   433.80000
+  PC:     3.19600
+RHOC:     0.23501
+
+RHO_HIGH:   0.6240
+  T_HIGH:   520.56
+
+ Isotherms:
+
+    T_IT:   520.56  390.42
+
+ RHO_IT1:   0.0223  0.0297  0.0446  0.0891  0.1783  0.2674  0.3566  0.4457  0.4903  0.5349  0.5794  0.6240
+ RHO_IT2:   0.0223  0.0297  0.0446  0.0891
+
+NMOL_IT1:      960     960     960     960     240     240     240     240     240     240     240     240
+NMOL_IT2:      960     960     960     960
+
+ Isochores:
+
+  RHO_IC:   0.4457  0.4903  0.5349  0.5794  0.6240
+
+   T_IC1:   393.71  448.34
+   T_IC2:   369.63  432.30
+   T_IC3:   339.21  410.76
+   T_IC4:   302.63  382.75
+   T_IC5:   260.43  347.17
+
+NMOL_IC1:      240     240
+NMOL_IC2:      240     240
+NMOL_IC3:      240     240
+NMOL_IC4:      240     240
+NMOL_IC5:      240     240

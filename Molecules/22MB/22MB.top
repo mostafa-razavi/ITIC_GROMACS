@@ -1,0 +1,48 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+22MB               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   CH3_C          1    22MB     C1      1      0         15.0350
+     2   C_C            1    22MB     C2      1      0         12.0110
+     3   CH2_C          1    22MB     C3      1      0         14.0270
+     4   CH3_C          1    22MB     C4      1      0         15.0350
+     5   CH3_C          1    22MB     C5      1      0         15.0350
+     6   CH3_C          1    22MB     C6      1      0         15.0350
+
+[ bonds ]
+; i	j
+         1         2         
+         2         3         
+         2         5         
+         2         6
+         3         4         
+
+
+[ angles ]
+; i	j	k
+         1         2         6         
+         1         2         5         
+         1         2         3
+         2         3         4         
+         3         2         6         
+         3         2         5
+         5         2         6         
+
+
+[ dihedrals ]
+; i	j	k 	l	type
+         1         2         3         4       3  
+         4         3         2         5       3
+         4         3         2         6       3 
+    
+
+[ system ]
+2,2-dimethylbutane
+
+[ molecules ]
+22MB Nmolec
+

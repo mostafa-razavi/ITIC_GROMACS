@@ -1,0 +1,38 @@
+#include "some_forcefield_itp"
+
+; 2,2-dimethylpropane (neopentane)
+
+[ moleculetype ]
+; Name            nrexcl
+NP               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   C_C            1    NP     C1      1      0         12.011   
+     2   CH3_C          1    NP     C2      1      0         15.035   
+     3   CH3_C          1    NP     C3      1      0         15.035   
+     4   CH3_C          1    NP     C4      1      0         15.035   
+     5   CH3_C          1    NP     C5      1      0         15.035   
+
+[ bonds ]
+; i	j
+1	2
+1	3
+1	4
+1    5
+
+
+[ angles ]
+; i	j	k
+2       1       5       
+2       1       4       
+2       1       3
+3       1       5       
+3       1       4       
+4       1       5
+
+[ system ]
+isopentane
+
+[ molecules ]
+NP Nmolec

@@ -1,0 +1,59 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+33MH               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   CH3_C          1    33MH     C1      1      0         15.0350
+     2   CH2_C          1    33MH     C2      1      0         14.0270
+     3   C_C            1    33MH     C3      1      0         12.0110
+     4   CH2_C          1    33MH     C4      1      0         14.0270
+     5   CH2_C          1    33MH     C5      1      0         14.0270
+     6   CH3_C          1    33MH     C6      1      0         15.0350
+     7   CH3_C          1    33MH     C7      1      0         15.0350
+     8   CH3_C          1    33MH     C8      1      0         15.0350
+
+[ bonds ]
+; i	j
+         1         2         
+         2         3         
+         3         4         
+         3         7
+         3         8         
+         4         5         
+         5         6         
+
+
+[ angles ]
+; i	j	k
+         1         2         3         
+         2         3         8         
+         2         3         7
+         2         3         4         
+         3         4         5         
+         4         5         6
+         4         3         8         
+         4         3         7         
+         7         3         8
+         
+
+
+[ dihedrals ]
+; i	j	k 	l	type
+         1         2         3         4         3
+         1         2         3         7         3
+         1         2         3         8         3         
+         2         3         4         5         3
+         3         4         5         6         3         
+         5         4         3         7         3
+         5         4         3         8         3         
+    
+
+[ system ]
+3,3-dimethylhexane
+
+[ molecules ]
+33MH Nmolec
+

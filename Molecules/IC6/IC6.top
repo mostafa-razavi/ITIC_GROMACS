@@ -1,0 +1,46 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+IC6               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   CH3_C          1    IC6     C1      1      0         15.0350
+     2   CH_C           1    IC6     C2      1      0         13.0190
+     3   CH2_C          1    IC6     C3      1      0         14.0270
+     4   CH2_C          1    IC6     C4      1      0         14.0270
+     5   CH3_C          1    IC6     C5      1      0         15.0350
+     6   CH3_C          1    IC6     C6      1      0         15.0350
+
+[ bonds ]
+; i	j
+       1       2       
+       2       3       
+       2       6       
+       3       4
+       4       5       
+
+
+[ angles ]
+; i	j	k
+       1       2       6       
+       1       2       3       
+       2       3       4
+       3       4       5       
+       3       2       6       
+
+
+[ dihedrals ]
+; i	j	k 	l	type
+       1       2       3       4     3  
+       2       3       4       5     3
+       4       3       2       6     3  
+    
+
+[ system ]
+isoheane
+
+[ molecules ]
+IC6 Nmolec
+

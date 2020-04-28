@@ -1,0 +1,50 @@
+
+CASN:   107-83-5
+CNAM:   PENTANE
+ FAM:   METHYLALKANES
+FORM:   C6H14
+INAM:   2-METHYLPENTANE
+NAME:   2-METHYLPENTANE
+SMIL:   CC(C)CCC
+STRU:   CH3CH2CH2CH(CH3)2
+
+  MW:    86.17536
+  TC:   497.70000
+  PC:     3.04000
+RHOC:     0.23417
+
+RHO_HIGH:   0.7130
+  T_HIGH:   522.59
+
+ Isotherms:
+
+    T_IT:   522.59  447.93
+
+ RHO_IT1:   0.0255  0.0340  0.0509  0.1019  0.2037  0.3056  0.4074  0.5093  0.5602  0.6111  0.6621  0.7130
+ RHO_IT2:   0.0255  0.0340  0.0509  0.1019
+
+NMOL_IT1:      800     800     800     800     200     200     200     200     200     200     200     200
+NMOL_IT2:      800     800     800     800
+
+ Isochores:
+
+  RHO_IC:   0.5093  0.5602  0.6111  0.6621  0.7130
+
+   T_IC1:   423.77 468.02 
+   T_IC2:   384.72 443.18 
+   T_IC3:   337.37 410.03 
+   T_IC4:   283.19 367.33
+   T_IC5:   224.99 314.55
+
+NMOL_IC1:      200     200
+NMOL_IC2:      200     200
+NMOL_IC3:      200     200
+NMOL_IC4:      200     200
+NMOL_IC5:      200     200
+
+
+
+
+
+
+

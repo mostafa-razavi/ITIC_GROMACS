@@ -1,0 +1,39 @@
+#include "some_forcefield_itp"
+
+[ moleculetype ]
+; Name            nrexcl
+C5B               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+     1   CH3_C          1    C5B     C1      1      0         15.035   
+     2   CH_C           1    C5B     C2      1      0         13.019   
+     3   CH2_C          1    C5B     C3      1      0         14.027   
+     4   CH3_C          1    C5B     C4      1      0         15.035   
+     5   CH3_C          1    C5B     C5      1      0         15.035   
+
+[ bonds ]
+; i	j
+1       2      
+2       3       
+2       5       
+3       4
+
+[ angles ]
+; i	j	k
+1       2       5       
+1       2       3       
+2       3       4
+3       2       5
+
+[ dihedrals ]
+; i	j	k 	l	type
+1       2       3       4      3
+4       3       2       5      3
+
+[ system ]
+isopentane
+
+[ molecules ]
+C5B Nmolec
+

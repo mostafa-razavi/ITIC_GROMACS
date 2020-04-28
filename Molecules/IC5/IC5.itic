@@ -1,0 +1,43 @@
+
+CASN:   78-78-4
+CNAM:   BUTANE
+ FAM:   METHYLALKANES
+FORM:   C5H12
+INAM:   ISOPENTANE
+NAME:   ISOPENTANE
+SMIL:   CC(C)CC
+STRU:   CH3CH(CH3)CH2CH3
+
+  MW:    72.14878
+  TC:   460.40000
+  PC:     3.38000
+RHOC:     0.23578
+
+RHO_HIGH:   0.7000
+  T_HIGH:   483.37
+
+ Isotherms:
+
+    T_IT:   483.37  414.36
+
+ RHO_IT1:   0.0250  0.0333  0.0500  0.1000  0.2000  0.3000  0.4000  0.5000  0.5500  0.6000  0.6500  0.7000
+ RHO_IT2:   0.0250  0.0333  0.0500  0.1000
+
+NMOL_IT1:      960     960     960     960     240     240     240     240     240     240     240     240
+NMOL_IT2:      960     960     960     960
+
+ Isochores:
+
+  RHO_IC:   0.5000  0.5500  0.6000  0.6500  0.7000
+
+   T_IC1:   392.27 433.08
+   T_IC2:   356.27 410.20 
+   T_IC3:   312.57 379.64 
+   T_IC4:   262.41 340.16
+   T_IC5:   208.07 290.91
+
+NMOL_IC1:      240     240
+NMOL_IC2:      240     240
+NMOL_IC3:      240     240
+NMOL_IC4:      240     240
+NMOL_IC5:      240     240
