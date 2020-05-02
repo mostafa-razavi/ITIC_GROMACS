@@ -55,13 +55,14 @@ do
     
 
     if [ "$LJ_or_BUCK" == "LJ" ]; then
-        sig=$(echo "scale=15; ${sitesigepsn_array[1]}*0.1" | bc | awk '{printf "%f", $0}')                                     # A to nm
-        eps=$(echo "scale=15; ${sitesigepsn_array[2]}/120.272443230099" | bc | awk '{printf "%f", $0}')                        # K to kJ/mol
 
         site=${sitesigepsn_array[0]}
         sig=${sitesigepsn_array[1]}
         eps=${sitesigepsn_array[2]}
 
+        sig=$(echo "scale=15; ${sitesigepsn_array[1]}*0.1" | bc | awk '{printf "%f", $0}')                                     # A to nm
+        eps=$(echo "scale=15; ${sitesigepsn_array[2]}/120.272443230099" | bc | awk '{printf "%f", $0}')                        # K to kJ/mol
+        
         sed -i "s/some_nbp1_${site}/$sig/g" $cooked_itp_file_path
         sed -i "s/some_nbp2_${site}/$eps/g" $cooked_itp_file_path
 
