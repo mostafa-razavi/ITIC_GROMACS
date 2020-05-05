@@ -1,0 +1,34 @@
+
+; Comments indicate location in Table 1 of B. Chen, J.J. Potoff, and J.I.
+; Siepmann, J. Phys. Chem. B 105, 3093 (2001),
+; http://dx.doi.org/10.1021/jp003882x  The exception is methane (CH4) which is
+; found in Table 1 of  M.G. Martin, and J.I. Siepmann, J. Phys. Chem. B, 102, 2569
+; (1998). http://dx.doi.org/10.1021/jp972543+
+
+; Additionally, some parameters were corrected on the TRAPPE-UA website. Those
+; corrected parameters were used here.
+
+[ atomtypes ]
+; _O indicates the (pseduo)atom is bonded to an oxygen. _C indicates the
+; (pseudo)atom is bonded to a carbon.
+; name      bond_type    mass       charge   ptype   C=Cn*eps*sig^6 [ kJ/mol*nm^6]	A=Cn*eps*sig^n [kJ/mol*nm^n]
+  CH4                    16.04300   0.000    A       0.0121034818160888	0.0000046332223180; CH4
+  O         O            15.99940  -0.700    A       3.02000e-01  7.73245e-01; CHX-[O]-H
+  H         H             1.00800   0.435    A       0.00000e-00  0.00000e-00; O-[H]
+  CH3_O     CH3          15.03500   0.265    A       1 1; [CH3]-OH
+  CH3_C     CH3          15.03500   0.000    A       0.0085159913612118	0.0000005112091578; [CH3]-CHX
+  CH2_O     CH2          14.02700   0.265    A       1 1; CHX-[CH2]-OH
+  CH2_C     CH2          14.02700   0.000    A       0.0058979709116081	0.0000006031586815; (CHX)2-[CH2]
+  CH_O      CH           13.01900   0.265    A       1 1; (CHX)2-[CH]-OH
+  CH_C      CH           13.01900   0.000    A       0.0034054433985489	0.0000014446145448; (CHX)3-[CH]
+  C_O       C            12.01100   0.265    A       1 1; (CHX)3-[C]-OH
+  C_C       C            12.01100   0.000    A       0.0014814795920741	0.0000105680296578; (CHX)4-[C]
+
+  [ nonbond_params ]
+; i      j      funct    C=Cn*eps*sig^6 [ kJ/mol*nm^6]	A=Cn*eps*sig^n [kJ/mol*nm^n]
+CH3_C    CH2_C     1        0.0071022056022726	0.0000005584444267
+CH3_C    CH_C      1        0.0055416455366089	0.0000009275417101
+CH3_C    C_C       1        0.0042084261647462	0.0000036534882004
+CH2_C    CH_C      1        0.0045501422405989	0.0000009719784919
+CH2_C    C_C       1        0.0033803212934341	0.0000036105194332
+CH_C     C_C       1        0.0023839347367041	0.0000045796488799
