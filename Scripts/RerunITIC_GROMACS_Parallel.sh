@@ -4,6 +4,13 @@ molec="$1"
 nrexcl="$2"
 Nproc="$3"
 gmx_exe_address="$4"
+table=$5										# table adress or no-table
+
+if [ "$table" == "no-table" ]; then
+	table_keyword=""
+else
+	table_keyword="-table $table"
+fi
 
 export GMX_MAXCONSTRWARN=-1
 
@@ -24,7 +31,7 @@ for fol in $CD/I*/*/*; do
 	line="source /usr/local/gromacs/bin/GMXRC; \
 	cd $fol; \
 	$gmx_exe_address grompp -f nvt_excl.mdp -c nvt_eq.gro -p ${molec}_excl.top -o nvt_excl.tpr; \
-	$gmx_exe_address mdrun -rerun nvt_pr.trr -nt 1 -deffnm nvt_excl;"
+	$gmx_exe_address mdrun -rerun nvt_pr.trr -nt 1 -deffnm nvt_excl $table_keyword;"
 
 	echo "$line" >> $CD/COMMANDS_excl.parallel
 

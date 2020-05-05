@@ -16,17 +16,17 @@ nstenergy                = 1
 cutoff-scheme            = some_cutoffscheme
 nstlist                  = 1
 pbc                      = xyz
-rlist                    = 1.4
+rlist                    = some_rlist
 
 ; Electrostatics
-coulombtype              = Cut-off
-rcoulomb                 = 1.4
+coulombtype              = some_vdwtype
+rcoulomb                 = some_rcoulomb
 
 ; van der Waals
-vdwtype                  = Cut-off
+vdwtype                  = some_vdwtype
 vdw-modifier             = none
-rvdw-switch              = 0.0
-rvdw                     = 1.4
+rvdw-switch              = 1.0
+rvdw                     = some_rvdw
 
 ; Apply long range dispersion corrections for Energy and Pressure
 DispCorr                 = EnerPres

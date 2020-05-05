@@ -5,21 +5,22 @@ export GMX_MAXCONSTRWARN=-1
 CD=${PWD}
 post_process_only="$1"
 
-molecules_array="C3 C4 C5"
+molecules_array="C2"
 Nproc=$(nproc)
-select="all"
+select="select9"
 
-Forcefield_name="TraPPE-GMX"
-Forcefield_ext="trappe-itic-razavi-gmx"
-force_field_path="$HOME/Git/ITIC_GROMACS/Forcefields/TraPPE/forcefield.itp"
+Forcefield_name="MiPPE-GMX"
+Forcefield_ext="mippe-itic-razavi-gmx"
+force_field_path="$HOME/Git/ITIC_GROMACS/Forcefields/MiPPE/forcefield.itp"
+table="$HOME/Git/ITIC_GROMACS/Forcefields/Tables/table_6-16.xvg"    #table address or no-table
 
-config_filename="TC_RC14_LF_BR_2NS-4NS_LINCS8_CSV.config"
+config_filename="TC_RC14_LF_BR_0.2NS-0.4NS_LINCS8_CSG_1000XYZ_TAB.config"
 gmx_exe_address="$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 
 #============Plots Settings=============
-LitsatExt="$Forcefield_ext trappe-itic-razavi"
-LitsatLabel="$Forcefield_name TraPPE-GOMC"
-ITIC_trhozures_filename="trhozures.res TraPPE.res"
+LitsatExt="$Forcefield_ext mippe-itic-razavi"
+LitsatLabel="$Forcefield_name MiPPE-GOMC"
+ITIC_trhozures_filename="trhozures.res MiPPE.res"
 ITIC_trhozures_label="$LitsatLabel"
 trimZ="no-trimZ" 
 trimU="yes-trimU"
@@ -42,7 +43,7 @@ if [ "$post_process_only" != "yes" ]; then
 	    else
 		select_itic_points=$(cat $HOME/Git/TranSFF/SelectITIC/${molec}_${select}.trho)
 	    fi
-	    bash $HOME/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh $molec $force_field_path $config_filename "$select_itic_points" $gmx_exe_address no-override no
+	    bash /home/mostafa/myProjects/TransFF/test_gromacs_mippe/RunITIC_GROMACS_Parallel.sh $molec $force_field_path $config_filename "$select_itic_points" $gmx_exe_address no-override no $Nproc $table
 	    cat COMMANDS.parallel >> ${CD}/COMMANDS.parallel
 	    cd $CD
 	done
@@ -58,7 +59,7 @@ do
     MW=$(grep "MW:" ${ITIC_file_name} | awk '{ print $2}')
 
        # Run excl 
-    bash $HOME/Git/ITIC_GROMACS/Scripts/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address #bash $HOME/Git/ITIC_GROMACS/Scripts/RunExcl_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address 500000
+    bash /home/mostafa/myProjects/TransFF/test_gromacs_mippe/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address $table #bash $HOME/Git/ITIC_GROMACS/Scripts/RunExcl_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address 500000
     
 
        # Get averages

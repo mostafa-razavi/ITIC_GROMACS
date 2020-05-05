@@ -14,10 +14,10 @@ Trho_rhoT_pairs_array=$4						# "all" or pairs of temperature/density (for IT) a
 gmx_exe_address=$5								# "gmx"
 NmolecOverride=$6								# Nmolec or no-override
 should_run=$7									# "yes" or "no" (lower case)
+Nproc=$8
+table=$9										# table adress or no-table
 
-#===== Number of CPU cores to use ===== 
-Nproc=$(nproc)
-if [ "$8" != "" ]; then Nproc="$8"; fi
+
 
 #========Paths================
 ScriptsDir="$HOME/Git/ITIC_GROMACS/Scripts"
@@ -99,9 +99,27 @@ cp $ConfigDir/em_steep.mdp $CD/Files
 cp $ConfigDir/em_l-bfgs.mdp $CD/Files
 
 sed -i "s/some_cutoffscheme/$cutoffscheme/g" $CD/Files/em_steep.mdp
+sed -i "s/some_vdwtype/$vdwtype/g" $CD/Files/em_steep.mdp
+sed -i "s/some_rvdw/$rvdw/g" $CD/Files/em_steep.mdp
+sed -i "s/some_coulombtype/$coulombtype/g" $CD/Files/em_steep.mdp
+sed -i "s/some_rcoulomb/$rcoulomb/g" $CD/Files/em_steep.mdp
+sed -i "s/some_rlist/$rlist/g" $CD/Files/em_steep.mdp
+
 sed -i "s/some_cutoffscheme/$cutoffscheme/g" $CD/Files/em_l-bfgs.mdp
+sed -i "s/some_vdwtype/$vdwtype/g" $CD/Files/em_l-bfgs.mdp
+sed -i "s/some_rvdw/$rvdw/g" $CD/Files/em_l-bfgs.mdp
+sed -i "s/some_coulombtype/$coulombtype/g" $CD/Files/em_l-bfgs.mdp
+sed -i "s/some_rcoulomb/$rcoulomb/g" $CD/Files/em_l-bfgs.mdp
+sed -i "s/some_rlist/$rlist/g" $CD/Files/em_l-bfgs.mdp
 
 sed -i "s:some_forcefield_itp:$force_field_file:g" $CD/Files/${molecule}.top
+
+
+if [ "$table" == "no-table" ]; then
+	table_keyword=""
+else
+	table_keyword="-table $table"
+fi
 
 #============== Function that returns 1 if the T_rho pair is selected 
 isTrhoPairSelected () {
@@ -259,13 +277,13 @@ for rho in "${rhosIC[@]}"
 			export GMX_MAXCONSTRWARN=-1; \
 			$gmx_exe_address insert-molecules -ci ${molecule}.pdb -nmol $N -try 100000 -box $L $L $L -o ${molecule}_box.gro; \
 			$gmx_exe_address grompp -f em_steep.mdp -c ${molecule}_box.gro -p ${molecule}.top -o em_steep.tpr; \
-			$gmx_exe_address mdrun -nt 1 -deffnm em_steep; \
+			$gmx_exe_address mdrun -nt 1 -deffnm em_steep $table_keyword; \
 			$gmx_exe_address grompp -f em_l-bfgs.mdp -c em_steep.gro -p ${molecule}.top -o em_l_bfgs.tpr -maxwarn 1; \
-			$gmx_exe_address mdrun -nt 1 -deffnm em_l_bfgs; \
+			$gmx_exe_address mdrun -nt 1 -deffnm em_l_bfgs $table_keyword; \
 			$gmx_exe_address grompp -f nvt_eq.mdp -c em_l_bfgs.gro -p ${molecule}.top -o nvt_eq.tpr; \
-			$gmx_exe_address mdrun -nt 1 -deffnm nvt_eq; \
+			$gmx_exe_address mdrun -nt 1 -deffnm nvt_eq $table_keyword; \
 			$gmx_exe_address grompp -f nvt_pr.mdp -c nvt_eq.gro -p ${molecule}.top -o nvt_pr.tpr; \
-			$gmx_exe_address mdrun -nt 1 -deffnm nvt_pr;"
+			$gmx_exe_address mdrun -nt 1 -deffnm nvt_pr $table_keyword;"
 
 		if [ "$Trho_rhoT_pairs_array" == "all" ]; then
 			echo "$line" >> $CD/COMMANDS.parallel
@@ -324,13 +342,13 @@ for T in "${TsIT[@]}"
 			export GMX_MAXCONSTRWARN=-1; \
 			$gmx_exe_address insert-molecules -ci ${molecule}.pdb -nmol $N -box $L $L $L -o ${molecule}_box.gro; \
 			$gmx_exe_address grompp -f em_steep.mdp -c ${molecule}_box.gro -p ${molecule}.top -o em_steep.tpr; \
-			$gmx_exe_address mdrun -nt 1 -deffnm em_steep; \
+			$gmx_exe_address mdrun -nt 1 -deffnm em_steep $table_keyword; \
 			$gmx_exe_address grompp -f em_l-bfgs.mdp -c em_steep.gro -p ${molecule}.top -o em_l_bfgs.tpr -maxwarn 1; \
-			$gmx_exe_address mdrun -nt 1 -deffnm em_l_bfgs; \
+			$gmx_exe_address mdrun -nt 1 -deffnm em_l_bfgs $table_keyword; \
 			$gmx_exe_address grompp -f nvt_eq.mdp -c em_l_bfgs.gro -p ${molecule}.top -o nvt_eq.tpr; \
-			$gmx_exe_address mdrun -nt 1 -deffnm nvt_eq; \
+			$gmx_exe_address mdrun -nt 1 -deffnm nvt_eq $table_keyword; \
 			$gmx_exe_address grompp -f nvt_pr.mdp -c nvt_eq.gro -p ${molecule}.top -o nvt_pr.tpr; \
-			$gmx_exe_address mdrun -nt 1 -deffnm nvt_pr;"
+			$gmx_exe_address mdrun -nt 1 -deffnm nvt_pr $table_keyword;"
 
 		if [ "$Trho_rhoT_pairs_array" == "all" ]; then
 			echo "$line" >> $CD/COMMANDS.parallel
