@@ -7,20 +7,21 @@ import os.path
 from os import path
 
 # Input parameters ##################
-run_name = "SimulPSO_C2-C5-C8_select3sat2lowrho1"
-molecules_array = ["C2", "C5", "C8"]
-datafile_keyword_array=[ "REFPROP", "REFPROP", "REFPROP"]
-site_names_array = ["CH3", "CH2"]
+run_name = "SimulPSO_C2_select4_2-10-17-21_80-20-4-4_2-2-1-1"
+molecules_array = ["C2"]
+datafile_keyword_array=[ "REFPROP"]
+site_names_array = ["CH3"]
 
-ITIC_subset_name = "select3sat2lowrho1"
-weights_file = "$HOME/Git/TranSFF/Weights/select3sat2lowrho1_80-20-4_2-2-1.wts"
-LJ_or_BUCK="BUCK"
-raw_ff_path = "$HOME/Git/ITIC_GROMACS/Forcefields/Buck-raw"
+ITIC_subset_name = "select4_2-10-17-21"
+weights_file = "$HOME/Git/TranSFF/Weights/select4_2-10-17-21_80-20-4-4_2-2-1-1.wts"
+LJ_or_BUCK_or_MIE="MIE"
+table = "$HOME/Git/ITIC_GROMACS/Forcefields/Tables/mie_16-6_rc10.xvg"    #table address or no-table
+raw_ff_path = "$HOME/Git/ITIC_GROMACS/Forcefields/MiPPE-raw"
 
-config_filename="TC_RC14_LF_BR_0.5NS-0.5NS_LINCS8_CSG.config"
+config_filename = "TC_RC10_LF_BR_0.1NS-0.1NS_LINCS8_CSG_100XYZ_TAB.config"
 gmx_exe_address = "$HOME/Git/GROMACS/gromacs-2018.1/build/bin/gmx"
 
-Nproc_per_particle = "2"
+Nproc_per_particle = "1"
 
 nnn = None
 sig_sigfig = 3
@@ -28,16 +29,15 @@ eps_sigfig = 1
 nnn_sigfig = 1
 
 # Set PSO parameters ################
-swarm_size = 6
-max_iterations = 20
+swarm_size = 8
+max_iterations = 30
 tol = 1e-6
 
 # Set PSO bounds and initial guesses ################
-lb = [3.5, 110, 10, 3.5, 60, 10]
-ub = [4.9, 150, 25, 4.9, 90, 25]
-initial_guess = [[], [], [], [], [], []]
+lb = [3.75, 110, 16]
+ub = [3.85, 130, 16]
+initial_guess = [[], [], [], [], [], [], [], []]
 nnbp = 3
-
 
 
 #============================================================================================
@@ -107,8 +107,9 @@ def objective_function(x):
         arg8 = Nproc_per_particle
         arg9 = ITIC_subset_name
         arg10 = config_filename
-        arg11 = LJ_or_BUCK
-        command = "bash $HOME/Git/ITIC_GROMACS/Scripts/RunGMX_simulticomp.sh" + " " + arg1 + " " + arg2+  " " + arg3 + " " + arg4 + " " + arg5 + " " + arg6 + " " + arg7 + " " + arg8 + " " + arg9 + " " + arg10 + " " + arg11 #+ " " + arg12 + " " + arg13 + " " + arg14 + " " + arg15 + " " + arg16
+        arg11 = LJ_or_BUCK_or_MIE
+        arg12 = table
+        command = "bash $HOME/Git/ITIC_GROMACS/Scripts/RunGMX_simulticomp.sh" + " " + arg1 + " " + arg2+  " " + arg3 + " " + arg4 + " " + arg5 + " " + arg6 + " " + arg7 + " " + arg8 + " " + arg9 + " " + arg10 + " " + arg11 + " " + arg12 #+ " " + arg13 + " " + arg14 + " " + arg15 + " " + arg16
 
         particel_folder_name = prefix + "_" + site_sig_eps_nnn
         if path.exists(particel_folder_name):

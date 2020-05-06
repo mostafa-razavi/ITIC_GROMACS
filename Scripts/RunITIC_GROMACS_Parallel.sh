@@ -1,7 +1,7 @@
 #!bin/bash
 # This script runs the ITIC simulations in parallel using GROMACS.
 # Example:
-#	bash ~/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh C5 /home/mostafa/Git/ITIC_GROMACS/Forcefields/trappeua.ff/forcefield.itp LJTC_rc14_2ns_4ns.config "all" gmx no-override yes 9
+#	bash ~/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh C5 /home/mostafa/Git/ITIC_GROMACS/Forcefields/trappeua.ff/forcefield.itp LJTC_rc14_2ns_4ns.config "all" gmx no-override yes 9 no-table
 set -e
 CD=${PWD}
 source /usr/local/gromacs/bin/GMXRC

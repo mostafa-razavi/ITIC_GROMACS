@@ -12,7 +12,8 @@ weights_file=$7
 Nproc=${8}
 ITIC_subset_name=$9 
 config_filename=${10} 
-LJ_or_BUCK=${11}
+LJ_or_BUCK_or_MIE=${11}
+table=${12}
 
 mkdir $CD/${prefix}_${site_sig_eps_nnn}
 cd $CD/${prefix}_${site_sig_eps_nnn}
@@ -34,12 +35,12 @@ do
 
     cp -r $raw_ff_path $CD/${prefix}_${site_sig_eps_nnn}/${molec}/temp
     cooked_itp_folder=$CD/${prefix}_${site_sig_eps_nnn}/${molec}/temp
-    tmp=$(bash $HOME/Git/ITIC_GROMACS/Scripts/generate_itp.sh $molec $site_sig_eps_nnn ${raw_ff_path}/ffnonbonded.itp $cooked_itp_folder $LJ_or_BUCK)
+    tmp=$(bash $HOME/Git/ITIC_GROMACS/Scripts/generate_itp.sh $molec $site_sig_eps_nnn ${raw_ff_path}/ffnonbonded.itp $cooked_itp_folder $LJ_or_BUCK_or_MIE)
     itp_file_name=$(echo $tmp | awk '{print $1}')
 
     mv $CD/${prefix}_${site_sig_eps_nnn}/${molec}/temp $CD/${prefix}_${site_sig_eps_nnn}/${molec}/$itp_file_name
 
-    bash $HOME/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh $molec $CD/${prefix}_${site_sig_eps_nnn}/${molec}/$itp_file_name/forcefield.itp $config_filename "$select_itic_points" $gmx_exe_address no-override no
+    bash $HOME/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh $molec $CD/${prefix}_${site_sig_eps_nnn}/${molec}/$itp_file_name/forcefield.itp $config_filename "$select_itic_points" $gmx_exe_address no-override no $Nproc $table
     cat COMMANDS.parallel >> $CD/${prefix}_${site_sig_eps_nnn}/COMMANDS.parallel
     cd $CD
 done
@@ -53,10 +54,10 @@ do
     cd $CD/${prefix}_${site_sig_eps_nnn}/${molec}
     
     ITIC_file_name=$(ls $CD/${prefix}_${site_sig_eps_nnn}/${molec}/Files/*.itic)
-    MW=$(grep "MW:" ${ITIC_file_name} | awk '{ print $2}')
+    MW=$(grep "MW:" ${ITIC_file_name} | awk '{print $2}')
 
        # Run excl 
-    bash $HOME/Git/ITIC_GROMACS/Scripts/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address
+    bash $HOME/Git/ITIC_GROMACS/Scripts/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address $table
     
 
        # Get averages
