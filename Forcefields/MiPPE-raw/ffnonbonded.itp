@@ -1,0 +1,34 @@
+
+; Comments indicate location in Table 1 of B. Chen, J.J. Potoff, and J.I.
+; Siepmann, J. Phys. Chem. B 105, 3093 (2001),
+; http://dx.doi.org/10.1021/jp003882x  The exception is methane (CH4) which is
+; found in Table 1 of  M.G. Martin, and J.I. Siepmann, J. Phys. Chem. B, 102, 2569
+; (1998). http://dx.doi.org/10.1021/jp972543+
+
+; Additionally, some parameters were corrected on the TRAPPE-UA website. Those
+; corrected parameters were used here.
+
+[ atomtypes ]
+; _O indicates the (pseduo)atom is bonded to an oxygen. _C indicates the
+; (pseudo)atom is bonded to a carbon.
+; name      bond_type    mass       charge   ptype   C=Cn*eps*sig^6 [ kJ/mol*nm^6]	A=Cn*eps*sig^n [kJ/mol*nm^n]
+  CH4                    16.04300   0.000    A       some_nbp1_CH4  some_nbp2_CH4
+  O         O            15.99940  -0.700    A       3.02000e-01  7.73245e-01
+  H         H             1.00800   0.435    A       0.00000e-00  0.00000e-00
+  CH3_O     CH3          15.03500   0.265    A       1 1
+  CH3_C     CH3          15.03500   0.000    A       some_nbp1_CH3  some_nbp2_CH3
+  CH2_O     CH2          14.02700   0.265    A       1 1
+  CH2_C     CH2          14.02700   0.000    A       some_nbp1_CH2  some_nbp2_CH2
+  CH_O      CH           13.01900   0.265    A       1 1
+  CH_C      CH           13.01900   0.000    A       some_nbp1_CH1  some_nbp2_CH1
+  C_O       C            12.01100   0.265    A       1 1
+  C_C       C            12.01100   0.000    A       some_nbp1_CT  some_nbp2_CT
+
+  [ nonbond_params ]
+; i      j      funct    C=Cn*eps*sig^6 [ kJ/mol*nm^6]	A=Cn*eps*sig^n [kJ/mol*nm^n]
+CH3_C    CH2_C     1        some_cnbp1_CH3-some_cnbp1_CH2 some_cnbp2_CH3-some_cnbp2_CH2 
+CH3_C    CH_C      1        some_cnbp1_CH3-some_cnbp1_CH1 some_cnbp2_CH3-some_cnbp2_CH1      
+CH3_C    C_C       1        some_cnbp1_CH3-some_cnbp1_CT  some_cnbp2_CH3-some_cnbp2_CT  
+CH2_C    CH_C      1        some_cnbp1_CH2-some_cnbp1_CH1 some_cnbp2_CH2-some_cnbp2_CH1 
+CH2_C    C_C       1        some_cnbp1_CH2-some_cnbp1_CT  some_cnbp2_CH2-some_cnbp2_CT  
+CH_C     C_C       1        some_cnbp1_CH1-some_cnbp1_CT  some_cnbp2_CH1-some_cnbp2_CT 
