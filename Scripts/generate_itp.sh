@@ -12,7 +12,7 @@ molec_name=$1
 site_sig_eps_n=$2       # E.g. CH3a-3.8-123-12_CH3b-3.8-120-12_CH2-4.0-58-12_CH1-4.7-13.5-12_CT-6.4-5-12
 raw_itp_path=$3         # The address of a itp file that contains some_nbp{1,2 or 3}}_{sitename} strings
 cooked_itp_folder=$4
-LJ_or_BUCK=$5           # Lennard-Jones or Buckingham?
+LJ_or_BUCK_or_MIE=$5           # LJ (Lennard-Jones) or BUCK (Buckingham) or MIE (Mie)?
 
 sites_array=($(grep ATOM ~/Git/TranSFF/Molecules/$molec_name/$molec_name.top | awk '{print $3}'))
 all_sites_string=""
@@ -37,8 +37,6 @@ do
 done
 all_sites_string="${all_sites_string:1}"
 
-#itp_file_name=${all_sites_string}.itp
-
 cooked_itp_file_path="$cooked_itp_folder/ffnonbonded.itp"
 
 cp $raw_itp_path $cooked_itp_file_path
@@ -47,6 +45,7 @@ site_array=()
 sig_array=()
 eps_array=()
 alpha_array=()
+nnn_array=()
 
 IFS='_' read -ra site_sig_eps_n_array <<< "$site_sig_eps_n"
 for i in $(seq 0 $(echo "${#site_sig_eps_n_array[@]}-1" | bc)) 
@@ -54,7 +53,7 @@ do
     IFS='-' read -ra sitesigepsn_array <<< "${site_sig_eps_n_array[i]}"
     
 
-    if [ "$LJ_or_BUCK" == "LJ" ]; then
+    if [ "$LJ_or_BUCK_or_MIE" == "LJ" ]; then
 
         site=${sitesigepsn_array[0]}
         sig=${sitesigepsn_array[1]}
@@ -66,7 +65,27 @@ do
         sed -i "s/some_nbp1_${site}/$sig/g" $cooked_itp_file_path
         sed -i "s/some_nbp2_${site}/$eps/g" $cooked_itp_file_path
 
-    elif [ "$LJ_or_BUCK" == "BUCK" ]; then
+    elif [ "$LJ_or_BUCK_or_MIE" == "MIE" ]; then
+
+        site=${sitesigepsn_array[0]}
+        sig=${sitesigepsn_array[1]}
+        eps=${sitesigepsn_array[2]}
+        nnn=${sitesigepsn_array[3]}
+
+        site_array=( "${site_array[@]}" "$site" )
+        sig_array=( "${sig_array[@]}" "$sig" )
+        eps_array=( "${eps_array[@]}" "$eps" )
+        nnn_array=( "${nnn_array[@]}" "$nnn" )
+
+        tmp=$(python3.6 $HOME/Git/ITIC_GROMACS/Scripts/Mie_get_A-C.py $sig $eps $nnn)
+
+        C_coef=$(echo "$tmp" | awk '{print$1}')
+        A_coef=$(echo "$tmp" | awk '{print$2}')
+        
+        sed -i "s/some_nbp1_${site}/$C_coef/g" $cooked_itp_file_path
+        sed -i "s/some_nbp2_${site}/$A_coef/g" $cooked_itp_file_path        
+
+    elif [ "$LJ_or_BUCK_or_MIE" == "BUCK" ]; then
 
         site=${sitesigepsn_array[0]}
         sig=${sitesigepsn_array[1]}
@@ -92,34 +111,67 @@ done
 
 
 # Apply combining rules for cross-inteactions
-for i in $(seq 0 $(echo "${#site_array[@]}-1" | bc))
-do
-    for j in $(seq $((i+1)) $(echo "${#site_array[@]}-1" | bc))
+
+if [ "$LJ_or_BUCK_or_MIE" == "MIE" ]; then
+    for i in $(seq 0 $(echo "${#site_array[@]}-1" | bc))
     do
-        sig1=${sig_array[i]}
-        sig2=${sig_array[j]}
+        for j in $(seq $((i+1)) $(echo "${#site_array[@]}-1" | bc))
+        do
+            sig1=${sig_array[i]}
+            sig2=${sig_array[j]}
 
-        eps1=${eps_array[i]}
-        eps2=${eps_array[j]}
+            eps1=${eps_array[i]}
+            eps2=${eps_array[j]}
 
-        alpha1=${alpha_array[i]}
-        alpha2=${alpha_array[j]}
+            nnn1=${nnn_array[i]}
+            nnn2=${nnn_array[j]}
 
-        combined_sigma=$(echo "scale=15; ($sig1+$sig2)/2" | bc -l | awk '{printf "%f", $0}')                 
-        combined_epsilon=$(echo "scale=15; sqrt($eps1*$eps2)" | bc -l | awk '{printf "%f", $0}')                 
-        combined_alpha=$(echo "scale=15; sqrt($alpha1*$alpha2)" | bc -l | awk '{printf "%f", $0}') 
-                        
-        # Convert sig, eps, and alpha set to A, B, and C
-        tmp=$(python3.6 $HOME/Git/ITIC_GROMACS/Scripts/Buckingham_get_rmin-A-B-C.py $combined_sigma $combined_epsilon $combined_alpha)
-        A_coef=$(echo "$tmp" | awk '{print$2}')
-        B_coef=$(echo "$tmp" | awk '{print$3}')
-        C_coef=$(echo "$tmp" | awk '{print$4}')
+            combined_sigma=$(echo "scale=15; ($sig1+$sig2)/2" | bc -l | awk '{printf "%f", $0}')                 
+            combined_epsilon=$(echo "scale=15; sqrt($eps1*$eps2)" | bc -l | awk '{printf "%f", $0}')                 
+            combined_nnn=$(echo "scale=15; ($nnn1+$nnn2)/2" | bc -l | awk '{printf "%f", $0}')                 
+                            
+            # Convert sig, eps, and nnn set to C and A
+            tmp=$(python3.6 $HOME/Git/ITIC_GROMACS/Scripts/Mie_get_A-C.py $combined_sigma $combined_epsilon $combined_nnn)
+            C_coef=$(echo "$tmp" | awk '{print$1}')
+            A_coef=$(echo "$tmp" | awk '{print$2}')
 
-        sed -i "s/some_cnbp1_${site_array[i]}-some_cnbp1_${site_array[j]}/$A_coef/g" $cooked_itp_file_path
-        sed -i "s/some_cnbp2_${site_array[i]}-some_cnbp2_${site_array[j]}/$B_coef/g" $cooked_itp_file_path
-        sed -i "s/some_cnbp3_${site_array[i]}-some_cnbp3_${site_array[j]}/$C_coef/g" $cooked_itp_file_path
+            sed -i "s/some_cnbp1_${site_array[i]}-some_cnbp1_${site_array[j]}/$C_coef/g" $cooked_itp_file_path
+            sed -i "s/some_cnbp2_${site_array[i]}-some_cnbp2_${site_array[j]}/$A_coef/g" $cooked_itp_file_path
+        done
     done
-done
+fi
+
+if [ "$LJ_or_BUCK_or_MIE" == "BUCK" ]; then
+    for i in $(seq 0 $(echo "${#site_array[@]}-1" | bc))
+    do
+        for j in $(seq $((i+1)) $(echo "${#site_array[@]}-1" | bc))
+        do
+            sig1=${sig_array[i]}
+            sig2=${sig_array[j]}
+
+            eps1=${eps_array[i]}
+            eps2=${eps_array[j]}
+
+            alpha1=${alpha_array[i]}
+            alpha2=${alpha_array[j]}
+
+            combined_sigma=$(echo "scale=15; ($sig1+$sig2)/2" | bc -l | awk '{printf "%f", $0}')                 
+            combined_epsilon=$(echo "scale=15; sqrt($eps1*$eps2)" | bc -l | awk '{printf "%f", $0}')                 
+            combined_alpha=$(echo "scale=15; sqrt($alpha1*$alpha2)" | bc -l | awk '{printf "%f", $0}') 
+                            
+            # Convert sig, eps, and alpha set to A, B, and C
+            tmp=$(python3.6 $HOME/Git/ITIC_GROMACS/Scripts/Buckingham_get_rmin-A-B-C.py $combined_sigma $combined_epsilon $combined_alpha)
+            A_coef=$(echo "$tmp" | awk '{print$2}')
+            B_coef=$(echo "$tmp" | awk '{print$3}')
+            C_coef=$(echo "$tmp" | awk '{print$4}')
+
+            sed -i "s/some_cnbp1_${site_array[i]}-some_cnbp1_${site_array[j]}/$A_coef/g" $cooked_itp_file_path
+            sed -i "s/some_cnbp2_${site_array[i]}-some_cnbp2_${site_array[j]}/$B_coef/g" $cooked_itp_file_path
+            sed -i "s/some_cnbp3_${site_array[i]}-some_cnbp3_${site_array[j]}/$C_coef/g" $cooked_itp_file_path
+        done
+    done
+fi
+
 
 sed -i '/some_nbp/d' $cooked_itp_file_path
 sed -i '/some_cnbp/d' $cooked_itp_file_path
