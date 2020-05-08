@@ -43,7 +43,7 @@ if [ "$post_process_only" != "yes" ]; then
 	    else
 		select_itic_points=$(cat $HOME/Git/TranSFF/SelectITIC/${molec}_${select}.trho)
 	    fi
-	    bash /home/mostafa/myProjects/TransFF/test_gromacs_mippe/RunITIC_GROMACS_Parallel.sh $molec $force_field_path $config_filename "$select_itic_points" $gmx_exe_address no-override no $Nproc $table
+	    bash $HOME/Git/ITIC_GROMACS/Scripts/RunITIC_GROMACS_Parallel.sh $molec $force_field_path $config_filename "$select_itic_points" $gmx_exe_address no-override no $Nproc $table
 	    cat COMMANDS.parallel >> ${CD}/COMMANDS.parallel
 	    cd $CD
 	done
@@ -59,7 +59,7 @@ do
     MW=$(grep "MW:" ${ITIC_file_name} | awk '{ print $2}')
 
        # Run excl 
-    bash /home/mostafa/myProjects/TransFF/test_gromacs_mippe/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address $table #bash $HOME/Git/ITIC_GROMACS/Scripts/RunExcl_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address 500000
+    bash $HOME/Git/ITIC_GROMACS/Scripts/RerunITIC_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address $table #bash $HOME/Git/ITIC_GROMACS/Scripts/RunExcl_GROMACS_Parallel.sh $molec 50 $Nproc $gmx_exe_address 500000
     
 
        # Get averages
