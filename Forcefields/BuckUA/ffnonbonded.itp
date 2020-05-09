@@ -1,0 +1,30 @@
+[ atomtypes ]
+; _O indicates the (pseduo)atom is bonded to an oxygen. _C indicates the
+; (pseudo)atom is bonded to a carbon.
+;
+;   A [kJ/mol] = 6*eps[K]/(alpha-6)*exp(alpha)*0.008314462811444
+;   B [1/nm] = alpha/rmin[A] * 10
+;   C [kJ/mol*nm^6] = eps[K]*alpha*rmin[A]^6/(alpha-6) * 0.008314462811444 / 10^6
+;
+;   CH4-3.727-153.7-14.1_CH3-3.776-114.3-15.9_CH2-3.99-55.2-15.9_CH1-4.709-12.7-15.9_CT-6.272-1.7-15.9
+; name      bond_type    mass       charge   ptype   A [kJ/mol]        B [1/nm]       C [kJ/mol*nm^6]
+  CH4                    16.04300   0.000    A       1258132.8123975028  33.657048870485355 0.012025430489377903; CH4
+  CH3_O     CH3          15.03500   0.265    A       3.75000e-01  8.14817e-01 1; [CH3]-OH
+  CH3_C     CH3          15.03500   0.000    A       4631042.254566631  37.820927200059266 0.008426205985567453; [CH3]-CHX
+  CH2_O     CH2          14.02700   0.265    A       3.95000e-01  3.82465e-01 1; CHX-[CH2]-OH 
+  CH2_C     CH2          14.02700   0.000    A       2236513.8447250933  35.79243636777538 0.005664614755684108; (CHX)2-[CH2]
+  CH_O      CH           13.01900   0.265    A       4.33000e-01  8.31445e-02 1; (CHX)2-[CH]-OH
+  CH_C      CH           13.01900   0.000    A       514560.2505074035  30.32742006953149 0.003521841373187569; (CHX)3-[CH]
+  C_O       C            12.01100   0.265    A       5.80000e-01  4.15723e-03 1; (CHX)3-[C]-OH
+  C_C       C            12.01100   0.000    A       68878.14376870757  22.769741885559945 0.002631959165151033; (CHX)4-[C]
+
+
+; This force field uses a combining rule that is different than GROMAC's default combining rule for Buckingham potential, hence they should be specified manually
+  [ nonbond_params ]
+; i      j      funct    A [kJ/mol]        B [1/nm]       C [kJ/mol*nm^6]
+CH3_C    CH2_C     2        3218289.9407065995 36.778733223647635 0.006924539951765782
+CH3_C    CH_C      2        1543680.751522211 33.662185293441084 0.005650020311296983         
+CH3_C    C_C       2        564781.0068244849  28.42591980641396  0.005700845639952617
+CH2_C    CH_C      2        1072763.3135688666 32.834077734779584 0.004559333267351985
+CH2_C    C_C       2        392488.12405445054  27.83313605679668  0.004495727946296386
+CH_C     C_C       2        188260.33560816167  26.010713251511476  0.0032373646344326843
